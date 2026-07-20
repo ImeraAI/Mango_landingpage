@@ -1,0 +1,1658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMERA | Premium AI Receptionist for Home Services</title>
+    <meta name="description" content="AI Receptionists that answer every call, schedule appointments, dispatch technicians, and draft invoices—24/7.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Palette */
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F2FBF7;
+            --card-bg: #FFFFFF;
+            --border: #E5E7EB;
+            --text-primary: #111827;
+            --text-secondary: #6B7280;
+            --primary-blue: #0F8A5F;
+            --primary-blue-hover: #0B6E4F;
+            --accent-gradient: linear-gradient(135deg, #0F8A5F, #22C55E);
+            
+            /* Shadows & Elevation (Dimensional Layering) */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+            
+            /* Typography Scale */
+            --spacing-unit: 8px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Swiss Modernism Typography Hierarchy */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            color: var(--text-primary);
+        }
+
+        h1 {
+            font-size: clamp(48px, 6vw, 72px);
+            font-weight: 700;
+            letter-spacing: -0.04em;
+        }
+
+        h2 {
+            font-size: clamp(36px, 4vw, 48px);
+            letter-spacing: -0.03em;
+        }
+        
+        h3 {
+            font-size: 24px;
+        }
+
+        p {
+            color: var(--text-secondary);
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 15px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: 1px solid transparent;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: var(--text-primary);
+            color: #fff;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-primary:hover {
+            background: #000;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-gradient {
+            background: var(--accent-gradient);
+            color: #fff;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-gradient:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+            opacity: 0.95;
+        }
+
+        .btn-ghost {
+            background: #fff;
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-ghost:hover {
+            background: var(--bg-secondary);
+        }
+
+        /* Sections */
+        section {
+            padding: 140px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+        .section-alt {
+            background: var(--bg-secondary);
+        }
+
+        .section-header {
+            max-width: 700px;
+            margin-bottom: 64px;
+        }
+
+        .section-header p {
+            font-size: 20px;
+            margin-top: 16px;
+        }
+
+        /* Subtle Animations */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 1. Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 72px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.05em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-primary);
+        }
+
+        .logo-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--primary-blue);
+            border-radius: 3px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-actions .sign-in {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* 2. Hero */
+        .hero {
+            padding: 160px 0 100px;
+            background: #fff;
+            border-bottom: none;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Minimal Background Pattern instead of glowing blobs */
+        .hero-pattern {
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(var(--border) 1px, transparent 1px);
+            background-size: 32px 32px;
+            opacity: 0.5;
+            z-index: 0;
+            mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+        }
+
+        .hero-grid {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: center;
+        }
+
+        .hero-content p {
+            font-size: 20px;
+            line-height: 1.5;
+            margin: 24px 0 40px;
+            max-width: 480px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+        }
+
+        /* Stripe-style Dimensional Layering Dashboard Mockup */
+        .dashboard-mockup {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            box-shadow: var(--shadow-xl);
+            padding: 24px;
+            position: relative;
+            transform: perspective(1000px) rotateY(-5deg) rotateX(2deg);
+            transition: transform 0.5s ease;
+        }
+
+        .dashboard-mockup:hover {
+            transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+        }
+
+        .mockup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .mockup-title {
+            font-weight: 500;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #10B981;
+            border-radius: 50%;
+        }
+
+        .mockup-body {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 20px;
+        }
+
+        .mockup-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .transcript-line {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+            font-size: 13px;
+        }
+
+        .avatar-small {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .avatar-small img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .avatar-ai {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+
+        .text-line {
+            line-height: 1.5;
+        }
+
+        .text-line span {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 2px;
+            color: var(--text-primary);
+        }
+
+        .text-content {
+            color: var(--text-secondary);
+        }
+
+        .floating-notification {
+            position: absolute;
+            bottom: -24px;
+            left: -24px;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            animation: float 6s ease-in-out infinite;
+            z-index: 2;
+        }
+
+        .floating-stat {
+            position: absolute;
+            top: -20px;
+            right: -30px;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 16px;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            animation: float 7s ease-in-out infinite 1s;
+            z-index: 2;
+        }
+
+        .floating-map {
+            position: absolute;
+            bottom: 40px;
+            right: -40px;
+            width: 120px;
+            height: 120px;
+            background: #F1F5F9;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: float 8s ease-in-out infinite 0.5s;
+            z-index: 2;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .icon-box {
+            width: 36px;
+            height: 36px;
+            background: #F0FDF4;
+            color: #16A34A;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            border: 1px solid #DCFCE7;
+        }
+
+        /* 3. Trusted By */
+        .trusted-by {
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+            background: #fff;
+        }
+
+        .trusted-text {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .logos {
+            display: flex;
+            justify-content: center;
+            gap: 64px;
+            opacity: 0.4;
+            filter: grayscale(100%);
+        }
+
+        .logos span {
+            font-size: 18px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: -0.02em;
+        }
+
+        /* 4. Why IMERA (Bento Box Grid) */
+        .why-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .bento-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .bento-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .why-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+
+        .bento-card h3 {
+            margin-bottom: 12px;
+        }
+
+        /* 5. Dashboard Showcase */
+        .showcase-wrapper {
+            position: relative;
+            margin: 0 auto;
+            max-width: 1000px;
+        }
+
+        .showcase-main {
+            width: 100%;
+            background: #fff;
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-xl);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .showcase-header {
+            height: 56px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            background: var(--bg-secondary);
+        }
+
+        .showcase-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .showcase-dots span {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #D1D5DB;
+        }
+
+        .showcase-body {
+            padding: 64px 40px;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+        }
+
+        .sequence-anim {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .seq-step {
+            background: #fff;
+            border: 1px solid var(--border);
+            padding: 16px 20px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            width: 100%;
+            opacity: 0.3;
+            transform: translateY(10px);
+            transition: all 0.4s ease;
+        }
+
+        .seq-step.active {
+            opacity: 1;
+            transform: translateY(0);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-blue);
+        }
+
+        .seq-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: var(--bg-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .seq-step.active .seq-icon {
+            background: #F2FBF7;
+            color: var(--primary-blue);
+        }
+
+        /* 6. Industries */
+        .industries-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .industry-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 40px;
+            display: flex;
+            align-items: flex-start;
+            gap: 24px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .industry-card h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        /* 7. How It Works */
+        .timeline {
+            max-width: 600px;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: var(--border);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 64px;
+            margin-bottom: 48px;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 14px;
+            top: 4px;
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            background: #fff;
+            border: 2px solid var(--primary-blue);
+            box-shadow: 0 0 0 4px #F2FBF7;
+        }
+
+        .timeline-item h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        /* 8. Features (Bento Box) */
+        .features-bento {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: minmax(180px, auto);
+            gap: 16px;
+        }
+
+        .feat-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .feat-wide {
+            grid-column: span 2;
+        }
+
+        .feat-tall {
+            grid-row: span 2;
+        }
+
+        .feat-card h4 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        /* 9. Live Dashboard */
+        .live-dash {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            height: 500px;
+        }
+
+        .dash-sidebar {
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border);
+            padding: 24px;
+        }
+
+        .list-item {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .list-item.active {
+            background: #fff;
+            border-color: var(--border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .list-item h4 {
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+
+        .list-item p {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .dash-main {
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dash-map {
+            flex: 1;
+            background: #F1F5F9;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .map-grid {
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(#E2E8F0 1px, transparent 1px), linear-gradient(90deg, #E2E8F0 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .tech-pin {
+            width: 16px;
+            height: 16px;
+            background: var(--primary-blue);
+            border-radius: 50%;
+            border: 3px solid #fff;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            z-index: 1;
+        }
+
+        .tech-pin::after {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border-radius: 50%;
+            background: var(--primary-blue);
+            opacity: 0.2;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.3; }
+            100% { transform: scale(2.5); opacity: 0; }
+        }
+
+        /* 10. Savings Calculator */
+        .calculator {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 48px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .calc-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: center;
+        }
+
+        .calc-input {
+            margin-bottom: 32px;
+        }
+
+        .calc-input label {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 500;
+            font-size: 15px;
+            margin-bottom: 16px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--primary-blue);
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #fff;
+            border: 2px solid var(--primary-blue);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .calc-results {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            padding: 32px;
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+
+        .result-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .result-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .result-value {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+        }
+
+        .text-success {
+            color: #059669;
+        }
+
+        /* 11. Testimonials */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .testimonial-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .testimonial-text {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 32px;
+            color: var(--text-primary);
+        }
+
+        .author {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .author-info h5 {
+            font-size: 15px;
+        }
+
+        .author-info p {
+            font-size: 13px;
+        }
+
+        /* 12. FAQ */
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .faq-question {
+            padding: 24px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .faq-icon {
+            font-size: 20px;
+            color: var(--text-secondary);
+            transition: transform 0.2s ease;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            color: var(--text-secondary);
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+        }
+
+        .faq-answer-inner {
+            padding-bottom: 24px;
+            font-size: 15px;
+        }
+
+        /* 13. CTA */
+        .cta-section {
+            padding: 120px 0;
+            text-align: center;
+            background: #fff;
+        }
+
+        .cta-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .cta-content h2 {
+            margin-bottom: 16px;
+        }
+
+        .cta-content p {
+            font-size: 18px;
+            margin-bottom: 40px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 80px 0 40px;
+            border-top: 1px solid var(--border);
+            background: var(--bg-secondary);
+            font-size: 14px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 64px;
+            margin-bottom: 64px;
+        }
+
+        .footer-col h4 {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .footer-col ul {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .footer-col a {
+            color: var(--text-secondary);
+            transition: color 0.2s;
+        }
+
+        .footer-col a:hover {
+            color: var(--text-primary);
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 992px) {
+            .hero-grid, .why-cards, .industries-grid, .features-bento, .live-dash, .calc-grid, .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+            .feat-wide, .feat-tall {
+                grid-column: span 1;
+                grid-row: span 1;
+            }
+            .live-dash {
+                height: auto;
+            }
+            .dash-sidebar {
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+            .dash-map {
+                height: 300px;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .logos {
+                flex-wrap: wrap;
+                gap: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. Navigation -->
+    <nav>
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <div class="logo-dot"></div>
+                IMERA
+            </a>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#industries">Industries</a>
+                <a href="#how-it-works">How it Works</a>
+                <a href="#pricing">Pricing</a>
+            </div>
+            <div class="nav-actions">
+                <a href="#" class="sign-in">Sign In</a>
+                <a href="#" class="btn btn-primary">Book Demo</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 2. Hero -->
+    <section class="hero">
+        <div class="hero-pattern"></div>
+        <div class="container hero-grid">
+            <div class="hero-content fade-in-up">
+                <h1>Never Miss Another Service Call.</h1>
+                <p>AI Receptionists that answer every call, schedule appointments, dispatch technicians, and draft invoices—24/7.</p>
+                <div class="hero-buttons">
+                    <a href="#" class="btn btn-primary">Start Free Trial</a>
+                    <a href="#" class="btn btn-ghost">Book Demo</a>
+                </div>
+            </div>
+            
+            <div class="hero-visual fade-in-up" style="animation-delay: 0.1s;">
+                <div class="dashboard-mockup">
+                    <div class="mockup-header">
+                        <div class="mockup-title">
+                            <div class="status-dot"></div>
+                            Active AI Intake
+                        </div>
+                        <span style="color: var(--text-secondary); font-size: 13px;">+1 (555) 0198</span>
+                    </div>
+                    <div class="mockup-body">
+                        <div>
+                            <div class="transcript-line">
+                                <div class="avatar-small">
+                                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&h=100&fit=crop" alt="Customer" />
+                                </div>
+                                <div class="text-line">
+                                    <span>Customer</span>
+                                    <div class="text-content">Hi, my AC stopped blowing cold air. Can someone come look at it?</div>
+                                </div>
+                            </div>
+                            <div class="transcript-line">
+                                <div class="avatar-small avatar-ai">A</div>
+                                <div class="text-line">
+                                    <span>Imera AI</span>
+                                    <div class="text-content">I can help with that. What's your address?</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mockup-card">
+                            <div style="font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">Automated Action</div>
+                            <div style="font-weight: 500; font-size: 14px; margin-bottom: 2px;">Job Booked</div>
+                            <div style="font-size: 13px; color: var(--text-secondary);">Tech: Mike (En route)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="floating-notification">
+                        <div class="icon-box">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        </div>
+                        <div>
+                            <div style="font-weight: 500; font-size: 13px;">Invoice Drafted</div>
+                            <div style="font-size: 13px; color: var(--text-secondary);">$150.00 Diagnostic</div>
+                        </div>
+                    </div>
+
+                    <div class="floating-stat">
+                        <div style="font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em;">Calls Handled</div>
+                        <div style="font-weight: 700; font-size: 20px; color: var(--primary);">+24%</div>
+                    </div>
+
+                    <div class="floating-map">
+                        <div class="map-grid"></div>
+                        <div class="tech-pin" style="transform: scale(0.6);"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Trusted By -->
+    <div class="trusted-by">
+        <div class="container">
+            <div class="trusted-text">Trusted by modern service operations</div>
+            <div class="logos">
+                <span>AquaPlumb</span>
+                <span>AirPro HVAC</span>
+                <span>VoltElectric</span>
+                <span>SafeGuard</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. Why IMERA -->
+    <section class="section-alt" id="features">
+        <div class="container">
+            <div class="section-header fade-in-up">
+                <h2>The complete AI workforce.</h2>
+                <p>Designed specifically for the complexities of field services.</p>
+            </div>
+            <div class="why-cards">
+                <div class="bento-card fade-in-up">
+                    <div class="why-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    </div>
+                    <h3>Answer Every Call</h3>
+                    <p>No more missed opportunities. Natural, conversational AI answers instantly, 24/7/365, without the overhead of an answering service.</p>
+                </div>
+                <div class="bento-card fade-in-up" style="animation-delay: 0.1s;">
+                    <div class="why-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                    </div>
+                    <h3>Book Jobs Automatically</h3>
+                    <p>Direct integration with your calendar. The AI qualifies the lead, finds an open slot, and securely books the appointment seamlessly.</p>
+                </div>
+                <div class="bento-card fade-in-up" style="animation-delay: 0.2s;">
+                    <div class="why-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    </div>
+                    <h3>Dispatch Instantly</h3>
+                    <p>Routes the right technician to the right job based on location, skills, and availability in real-time on your dispatch board.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Dashboard Showcase -->
+    <section>
+        <div class="container">
+            <div class="section-header fade-in-up" style="margin: 0 auto 64px; text-align: center;">
+                <h2>A seamless pipeline.</h2>
+                <p>Watch how a single phone call flows automatically into your ledger.</p>
+            </div>
+            
+            <div class="showcase-wrapper fade-in-up">
+                <div class="showcase-main">
+                    <div class="showcase-header">
+                        <div class="showcase-dots">
+                            <span></span><span></span><span></span>
+                        </div>
+                    </div>
+                    <div class="showcase-body">
+                        <div class="sequence-anim">
+                            <div class="seq-step" id="seq-1">
+                                <div class="seq-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></div>
+                                <div>
+                                    <div style="font-weight: 500; font-size: 14px;">Incoming Call</div>
+                                    <div style="font-size: 13px; color: var(--text-secondary);">Customer calls the main line</div>
+                                </div>
+                            </div>
+                            <div style="height: 16px; border-left: 1px solid var(--border); margin: -8px 0;"></div>
+                            <div class="seq-step" id="seq-2">
+                                <div class="seq-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10H12V2z"></path></svg></div>
+                                <div>
+                                    <div style="font-weight: 500; font-size: 14px;">AI Qualification</div>
+                                    <div style="font-size: 13px; color: var(--text-secondary);">Extracts address & problem</div>
+                                </div>
+                            </div>
+                            <div style="height: 16px; border-left: 1px solid var(--border); margin: -8px 0;"></div>
+                            <div class="seq-step" id="seq-3">
+                                <div class="seq-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect></svg></div>
+                                <div>
+                                    <div style="font-weight: 500; font-size: 14px;">Job Booked</div>
+                                    <div style="font-size: 13px; color: var(--text-secondary);">Added to service calendar</div>
+                                </div>
+                            </div>
+                            <div style="height: 16px; border-left: 1px solid var(--border); margin: -8px 0;"></div>
+                            <div class="seq-step" id="seq-4">
+                                <div class="seq-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></div>
+                                <div>
+                                    <div style="font-weight: 500; font-size: 14px;">Tech Dispatched</div>
+                                    <div style="font-size: 13px; color: var(--text-secondary);">Technician notified via app</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Industries -->
+    <section class="section-alt" id="industries">
+        <div class="container">
+            <div class="section-header fade-in-up">
+                <h2>Built for your trade.</h2>
+                <p>Custom trained on the terminology, workflows, and emergency protocols specific to your industry.</p>
+            </div>
+            <div class="industries-grid">
+                <div class="industry-card fade-in-up">
+                    <div style="font-size: 32px;">🚰</div>
+                    <div>
+                        <h3>Plumbing</h3>
+                        <p>Understands leak severity, water heater models, and emergency dispatch protocols.</p>
+                    </div>
+                </div>
+                <div class="industry-card fade-in-up" style="animation-delay: 0.1s;">
+                    <div style="font-size: 32px;">❄️</div>
+                    <div>
+                        <h3>HVAC</h3>
+                        <p>Handles no-heat emergencies, seasonal maintenance booking, and part inquiries.</p>
+                    </div>
+                </div>
+                <div class="industry-card fade-in-up" style="animation-delay: 0.2s;">
+                    <div style="font-size: 32px;">⚡</div>
+                    <div>
+                        <h3>Electrical</h3>
+                        <p>Qualifies panel upgrades, short circuits, and safety hazards accurately.</p>
+                    </div>
+                </div>
+                <div class="industry-card fade-in-up" style="animation-delay: 0.3s;">
+                    <div style="font-size: 32px;">🧯</div>
+                    <div>
+                        <h3>Fire Safety</h3>
+                        <p>Schedules annual inspections, compliance checks, and system maintenance.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Features Grid (Bento) -->
+    <section>
+        <div class="container">
+            <div class="section-header fade-in-up">
+                <h2>Enterprise capabilities.</h2>
+            </div>
+            <div class="features-bento fade-in-up">
+                <div class="feat-card feat-wide">
+                    <div>
+                        <h4>24/7 Voice AI</h4>
+                        <p>Human-like conversational models powered by ElevenLabs that never sleep.</p>
+                    </div>
+                </div>
+                <div class="feat-card">
+                    <div>
+                        <h4>Smart Scheduling</h4>
+                        <p>Integrates perfectly with your calendar software.</p>
+                    </div>
+                </div>
+                <div class="feat-card feat-tall">
+                    <div>
+                        <h4>Dispatch Board</h4>
+                        <p>See all your techs on a live map and manage routes effortlessly in real time.</p>
+                    </div>
+                </div>
+                <div class="feat-card">
+                    <div>
+                        <h4>SMS Updates</h4>
+                        <p>Automated text notifications keep customers in the loop.</p>
+                    </div>
+                </div>
+                <div class="feat-card feat-wide">
+                    <div>
+                        <h4>Automated Invoices</h4>
+                        <p>Auto-generate line-item invoices based on the transcript's diagnostic details.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. Live Dashboard -->
+    <section class="section-alt">
+        <div class="container">
+            <div class="section-header fade-in-up">
+                <h2>Command Center.</h2>
+                <p>Your entire operation visible at a single glance.</p>
+            </div>
+            <div class="live-dash fade-in-up">
+                <div class="dash-sidebar">
+                    <div style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 12px; letter-spacing: 0.05em;">Active Jobs</div>
+                    <div class="list-item active">
+                        <h4>Leak Repair</h4>
+                        <p>123 Main St • Tech: Mike</p>
+                    </div>
+                    <div class="list-item">
+                        <h4>AC Maintenance</h4>
+                        <p>456 Oak Ave • Tech: Sarah</p>
+                    </div>
+                    <div class="list-item">
+                        <h4>Panel Upgrade</h4>
+                        <p>789 Pine Rd • Tech: John</p>
+                    </div>
+                </div>
+                <div class="dash-main">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 24px;">
+                        <div>
+                            <h3 style="margin-bottom: 4px;">Job #1042</h3>
+                            <p style="font-size: 14px;">Status: En Route</p>
+                        </div>
+                        <button class="btn btn-ghost" style="padding: 8px 16px; font-size: 13px;">View Invoice</button>
+                    </div>
+                    <div class="dash-map">
+                        <div class="map-grid"></div>
+                        <div class="tech-pin"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. Savings Calculator -->
+    <section id="pricing">
+        <div class="container">
+            <div class="section-header fade-in-up">
+                <h2>Calculate your ROI.</h2>
+                <p>Compare IMERA to the overhead of a traditional answering service or full-time receptionist.</p>
+            </div>
+            <div class="calculator fade-in-up">
+                <div class="calc-grid">
+                    <div>
+                        <div class="calc-input">
+                            <label>
+                                <span>Receptionist Salary / Service</span>
+                                <span id="salary-val" style="color: var(--text-primary);">$4,000/mo</span>
+                            </label>
+                            <input type="range" id="salary-range" min="1000" max="8000" step="500" value="4000">
+                        </div>
+                        <div class="calc-input">
+                            <label>
+                                <span>Calls per Month</span>
+                                <span id="calls-val" style="color: var(--text-primary);">500</span>
+                            </label>
+                            <input type="range" id="calls-range" min="100" max="2000" step="100" value="500">
+                        </div>
+                    </div>
+                    <div class="calc-results">
+                        <div class="result-item">
+                            <div class="result-label">Estimated Cost</div>
+                            <div class="result-value" id="imera-cost">$250</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-label">Monthly Savings</div>
+                            <div class="result-value text-success" id="savings-amount">$3,750</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. Testimonials -->
+    <section class="section-alt">
+        <div class="container">
+            <div class="section-header fade-in-up">
+                <h2>Trusted by operators.</h2>
+            </div>
+            <div class="testimonials-grid fade-in-up">
+                <div class="testimonial-card">
+                    <div class="testimonial-text">"IMERA completely transformed our plumbing business. We used to miss calls on weekends, losing thousands. Now, every emergency is answered, booked, and dispatched while I sleep."</div>
+                    <div class="author">
+                        <div class="avatar-small" style="width: 48px; height: 48px; margin-right: 16px;">
+                            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&h=100&fit=crop" alt="David Chen" />
+                        </div>
+                        <div class="author-info">
+                            <h5>David Chen</h5>
+                            <p>Owner, AquaPlumb Services</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">"The dashboard is incredibly clean. It feels like Stripe but built for HVAC. Our technicians love the automated SMS updates, and our customers are blown away by the AI."</div>
+                    <div class="author">
+                        <div class="avatar-small" style="width: 48px; height: 48px; margin-right: 16px;">
+                            <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=100&h=100&fit=crop" alt="Sarah Jenkins" />
+                        </div>
+                        <div class="author-info">
+                            <h5>Sarah Jenkins</h5>
+                            <p>Operations Manager, AirPro HVAC</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 11. FAQ -->
+    <section>
+        <div class="container">
+            <div class="section-header fade-in-up">
+                <h2>Frequently Asked Questions</h2>
+            </div>
+            <div class="faq-list fade-in-up">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How human-like does the AI sound?
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">Our voice models use state-of-the-art technology to sound indistinguishable from a human. It pauses, breathes, and reacts naturally to interruptions without sounding robotic.</div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Does it integrate with my existing software?
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">Yes. IMERA integrates seamlessly with popular field service management tools like ServiceTitan, Housecall Pro, and Jobber, as well as standard Google/Outlook calendars.</div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What happens if the AI can't answer a question?
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">If the AI encounters a complex scenario or an agitated customer, it smoothly routes the call to a designated human fallback number or takes a detailed message for you to review.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 12. CTA -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content fade-in-up">
+                <h2>Ready to scale your business?</h2>
+                <p>Join hundreds of home service professionals who have automated their front office and increased their revenue.</p>
+                <div style="display: flex; gap: 16px; justify-content: center;">
+                    <a href="#" class="btn btn-primary" style="padding: 16px 32px;">Start Free Trial</a>
+                    <a href="#" class="btn btn-ghost" style="padding: 16px 32px;">Contact Sales</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo" style="margin-bottom: 16px;">
+                        <div class="logo-dot"></div>
+                        IMERA
+                    </div>
+                    <p style="font-size: 13px; max-width: 250px;">The intelligent front office for modern field service companies.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Integrations</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Changelog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Industries</h4>
+                    <ul>
+                        <li><a href="#">Plumbing</a></li>
+                        <li><a href="#">HVAC</a></li>
+                        <li><a href="#">Electrical</a></li>
+                        <li><a href="#">Fire Safety</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div>&copy; 2026 IMERA AI Inc. All rights reserved.</div>
+                <div style="display: flex; gap: 24px;">
+                    <a href="#">Privacy</a>
+                    <a href="#">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-up').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Sequence Animation for Dashboard Showcase
+        const sequenceObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    playSequence();
+                    sequenceObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        const showcaseElement = document.querySelector('.sequence-anim');
+        if(showcaseElement) {
+            sequenceObserver.observe(showcaseElement);
+        }
+
+        function playSequence() {
+            setTimeout(() => document.getElementById('seq-1').classList.add('active'), 400);
+            setTimeout(() => document.getElementById('seq-2').classList.add('active'), 1200);
+            setTimeout(() => document.getElementById('seq-3').classList.add('active'), 2000);
+            setTimeout(() => document.getElementById('seq-4').classList.add('active'), 2800);
+        }
+
+        // Savings Calculator
+        const salaryRange = document.getElementById('salary-range');
+        const callsRange = document.getElementById('calls-range');
+        const salaryVal = document.getElementById('salary-val');
+        const callsVal = document.getElementById('calls-val');
+        const imeraCostEl = document.getElementById('imera-cost');
+        const savingsAmountEl = document.getElementById('savings-amount');
+
+        function updateCalculator() {
+            const salary = parseInt(salaryRange.value);
+            const calls = parseInt(callsRange.value);
+            
+            salaryVal.textContent = `$${salary.toLocaleString()}/mo`;
+            callsVal.textContent = calls.toLocaleString();
+
+            const imeraCost = 99 + (calls * 0.5); 
+            const savings = salary - imeraCost;
+
+            imeraCostEl.textContent = `$${Math.round(imeraCost).toLocaleString()}`;
+            savingsAmountEl.textContent = `$${Math.round(savings).toLocaleString()}`;
+        }
+
+        salaryRange.addEventListener('input', updateCalculator);
+        callsRange.addEventListener('input', updateCalculator);
+        updateCalculator();
+
+        // FAQ Accordion
+        document.querySelectorAll('.faq-item').forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+                if (!isActive) item.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
