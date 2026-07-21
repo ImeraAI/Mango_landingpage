@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { DemoBooking } from '@/components/sections/DemoBooking';
+import { StaticBackdrop } from '@/components/primitives/StaticBackdrop';
 
 export const metadata: Metadata = {
   title: 'Book a demo',
@@ -18,8 +19,11 @@ export default function DemoPage() {
   return (
     <>
       <Header />
-      <main className="overflow-x-hidden bg-white">
-        <DemoBooking />
+      <main className="relative overflow-x-hidden bg-white">
+        <StaticBackdrop />
+        <div className="relative">
+          <DemoBooking />
+        </div>
       </main>
       <Footer />
     </>

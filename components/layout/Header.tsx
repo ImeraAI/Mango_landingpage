@@ -9,10 +9,10 @@ import { Logo } from '@/components/primitives/Logo';
 import { Button } from '@/components/ui/button';
 
 const NAV = [
-  { label: 'How it works', href: '/#how-it-works' },
-  { label: 'Platform', href: '/#platform' },
-  { label: 'Industries', href: '/#industries' },
-  { label: 'Pricing', href: '/#pricing' },
+  { label: 'How it works', href: '/how-it-works' },
+  { label: 'Platform', href: '/platform' },
+  { label: 'Industries', href: '/industries' },
+  { label: 'Pricing', href: '/pricing' },
 ];
 
 export function Header() {
@@ -42,13 +42,13 @@ export function Header() {
 
         <nav className="hidden items-center gap-1 md:flex">
           {NAV.map((item) => (
-            <a
+            <Link
               key={item.href}
               href={item.href}
               className="rounded-full px-3.5 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100/70 hover:text-slate-900"
             >
               {item.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -91,14 +91,14 @@ export function Header() {
               </div>
               <nav className="mt-4 flex flex-col">
                 {NAV.map((item) => (
-                  <a
+                  <Link
                     key={item.href}
                     href={item.href}
                     onClick={() => setOpen(false)}
                     className="rounded-xl px-3 py-3 text-base font-medium text-slate-700 hover:bg-slate-50"
                   >
                     {item.label}
-                  </a>
+                  </Link>
                 ))}
               </nav>
               <div className="mt-4 flex flex-col gap-2">

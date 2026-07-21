@@ -54,14 +54,17 @@ export default function SignInPage() {
       <main className="relative flex min-h-[calc(100vh-68px)] items-center justify-center overflow-x-hidden bg-slate-50/70 px-4 py-24">
         <AuthBackdrop />
         <div className="relative w-full max-w-md">
-          <div className="flex justify-center">
-            <Link href="/" aria-label="Mango home">
-              <Logo />
-            </Link>
-          </div>
-
-          <div className="mt-8 rounded-3xl border border-slate-200/80 bg-white p-8 shadow-card">
-            <h1 className="font-display text-2xl font-semibold tracking-tight text-slate-900">
+          <div className="rounded-3xl border border-slate-200/80 bg-white p-8 shadow-card">
+            <div className="flex justify-center">
+              <Link
+                href="/"
+                aria-label="Mango home"
+                className="inline-flex rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40"
+              >
+                <Logo className="h-9 w-auto" />
+              </Link>
+            </div>
+            <h1 className="mt-6 font-display text-2xl font-semibold tracking-tight text-slate-900">
               Sign in
             </h1>
             <p className="mt-2 text-sm text-slate-500">
@@ -117,11 +120,11 @@ export default function SignInPage() {
             </form>
 
             <div className="my-6 flex items-center gap-3">
-              <span className="h-px flex-1 bg-slate-200" />
+              <span className="h-px flex-1 bg-slate-200/60" />
               <span className="text-xs font-medium uppercase tracking-wider text-slate-400">
                 Or sign in with
               </span>
-              <span className="h-px flex-1 bg-slate-200" />
+              <span className="h-px flex-1 bg-slate-200/60" />
             </div>
 
             {/* Same honest path as the password form: there is no auth backend,

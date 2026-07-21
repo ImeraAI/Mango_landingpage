@@ -7,20 +7,20 @@ const COLUMNS = [
   {
     title: 'Platform',
     links: [
-      { label: 'AI reception', href: '/#platform' },
-      { label: 'Scheduling', href: '/#platform' },
-      { label: 'Dispatch', href: '/#platform' },
-      { label: 'Invoicing', href: '/#platform' },
-      { label: 'Follow-ups', href: '/#platform' },
+      { label: 'AI reception', href: '/platform'},
+      { label: 'Scheduling', href: '/platform'},
+      { label: 'Dispatch', href: '/platform'},
+      { label: 'Invoicing', href: '/platform'},
+      { label: 'Follow-ups', href: '/platform'},
     ],
   },
   {
     title: 'Industries',
     links: [
-      { label: 'Plumbing', href: '/#industries' },
-      { label: 'HVAC', href: '/#industries' },
-      { label: 'Electrical', href: '/#industries' },
-      { label: 'Fire & Safety', href: '/#industries' },
+      { label: 'Plumbing', href: '/industries'},
+      { label: 'HVAC', href: '/industries'},
+      { label: 'Electrical', href: '/industries'},
+      { label: 'Fire & Safety', href: '/industries'},
     ],
   },
   {
@@ -35,7 +35,7 @@ const COLUMNS = [
   {
     title: 'Resources',
     links: [
-      { label: 'Pricing', href: '/#pricing' },
+      { label: 'Pricing', href: '/pricing' },
       { label: 'ROI calculator', href: '/#roi' },
       { label: 'Integrations', href: '/#integrations' },
       { label: 'Blog', href: '/blog' },
