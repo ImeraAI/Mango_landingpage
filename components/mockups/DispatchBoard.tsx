@@ -13,7 +13,7 @@ export function DispatchBoard({ className }: { className?: string }) {
         className
       )}
     >
-      <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4">
+      <div className="flex items-center justify-between border-b border-slate-100 px-4 py-3.5 sm:px-5 sm:py-4">
         <div className="flex items-center gap-2.5">
           <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-50 text-brand-600">
             <Navigation className="h-4 w-4" />
@@ -31,7 +31,7 @@ export function DispatchBoard({ className }: { className?: string }) {
       </div>
 
       {/* assigned technician */}
-      <div className="flex items-center gap-3 px-5 py-4">
+      <div className="flex items-center gap-3 px-4 py-3.5 sm:px-5 sm:py-4">
         <span className="flex h-11 w-11 items-center justify-center rounded-full bg-slate-900 text-sm font-semibold text-white">
           MR
         </span>

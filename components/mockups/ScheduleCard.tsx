@@ -23,7 +23,7 @@ export function ScheduleCard({ className }: { className?: string }) {
         className
       )}
     >
-      <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4">
+      <div className="flex items-center justify-between border-b border-slate-100 px-4 py-3.5 sm:px-5 sm:py-4">
         <div className="flex items-center gap-2.5">
           <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-50 text-brand-600">
             <CalendarCheck className="h-4 w-4" />

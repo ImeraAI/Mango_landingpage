@@ -60,7 +60,7 @@ export function Hero() {
   const chipY = useTransform(scrollYProgress, [0, 1], [0, -60]);
 
   return (
-    <section id="top" className="relative overflow-hidden pt-32 sm:pt-36">
+    <section id="top" className="relative overflow-hidden pt-28 sm:pt-36">
       <GridBackground />
       {/* ambient brand glow */}
       <div
@@ -80,7 +80,8 @@ export function Hero() {
             New
           </span>
           <span className="font-medium text-slate-600">
-            Emergency after-hours intake, fully automated
+            After-hours intake
+            <span className="hidden sm:inline">, fully automated</span>
           </span>
           <ArrowRight className="h-3.5 w-3.5 text-slate-400 transition-transform group-hover:translate-x-0.5" />
         </motion.a>
@@ -89,7 +90,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.75, ease: EASE, delay: 0.05 }}
-          className="mt-7 max-w-4xl font-display text-[2.75rem] font-semibold leading-[1.05] tracking-tightest text-slate-900 sm:text-6xl md:text-[4.25rem]"
+          className="mt-5 max-w-4xl font-display text-[2.5rem] sm:mt-7 font-semibold leading-[1.05] tracking-tightest text-slate-900 sm:text-6xl md:text-[4.25rem]"
         >
           Never miss another
           <br className="hidden sm:block" /> service call.{' '}
@@ -100,18 +101,24 @@ export function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.75, ease: EASE, delay: 0.12 }}
-          className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600 sm:text-xl"
+          className="mt-4 max-w-2xl text-base leading-relaxed text-slate-600 sm:mt-6 sm:text-xl"
         >
+          {/* Mobile gets the one-line version; the full pitch reads as a wall
+              of text on a phone. */}
           Mango is the AI receptionist for home service teams. It answers every
-          call, qualifies the lead, dispatches a tech, books the job, drafts the
-          invoice, and follows up, 24/7, in your company&apos;s voice.
+          call
+          <span className="hidden sm:inline">
+            , qualifies the lead, dispatches a tech, books the job, drafts the
+            invoice
+          </span>{' '}
+          and follows up, 24/7, in your company&apos;s voice.
         </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.75, ease: EASE, delay: 0.2 }}
-          className="mt-9 flex flex-col items-center gap-3 sm:flex-row"
+          className="mt-7 flex w-full flex-col items-center gap-3 sm:mt-9 sm:w-auto sm:flex-row"
         >
           <Button variant="brand" size="lg" asChild>
             <Link href="/demo">
@@ -131,9 +138,9 @@ export function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.35 }}
-          className="mt-8 flex flex-col items-center gap-4"
+          className="mt-6 flex flex-col items-center gap-3 sm:mt-8 sm:gap-4"
         >
-          <div className="flex flex-col items-center gap-2 text-sm text-slate-500 sm:flex-row sm:gap-4">
+          <div className="flex flex-row flex-wrap items-center justify-center gap-x-3 gap-y-1 text-sm text-slate-500 sm:gap-4">
             <span className="inline-flex items-center gap-1">
               {Array.from({ length: 5 }).map((_, i) => (
                 <Star
@@ -143,11 +150,11 @@ export function Hero() {
               ))}
               <span className="ml-1 font-semibold text-slate-800">4.9/5</span>
             </span>
-            <span className="hidden h-4 w-px bg-slate-200 sm:block" />
+            <span className="h-4 w-px bg-slate-200" />
             <span>
               Trusted by{' '}
-              <span className="font-semibold text-slate-800">500+</span> home
-              service teams
+              <span className="font-semibold text-slate-800">500+</span>{' '}
+              <span className="hidden sm:inline">home service </span>teams
             </span>
           </div>
 
@@ -156,7 +163,7 @@ export function Hero() {
       </div>
 
       {/* Product visual: scroll-unfold + Apple-style mirror */}
-      <div ref={ref} className="container relative mt-16 pb-24 sm:mt-20">
+      <div ref={ref} className="container relative mt-10 pb-16 sm:mt-20 sm:pb-24">
         <div className="perspective-2000 mx-auto max-w-3xl">
           <motion.div
             style={{ rotateX, scale }}

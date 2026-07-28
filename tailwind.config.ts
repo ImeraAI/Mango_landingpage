@@ -127,8 +127,10 @@ export default {
           to: { height: '0' },
         },
         marquee: {
+          // Each duplicated track shifts by exactly its own width (trailing
+          // gap included), so the second copy lands where the first started.
           from: { transform: 'translateX(0)' },
-          to: { transform: 'translateX(calc(-50% - 0.5rem))' },
+          to: { transform: 'translateX(-100%)' },
         },
         shimmer: {
           '100%': { transform: 'translateX(100%)' },
