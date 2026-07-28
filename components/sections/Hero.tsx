@@ -68,7 +68,7 @@ export function Hero() {
         className="pointer-events-none absolute left-1/2 top-[-10%] -z-10 h-[560px] w-[860px] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(16,185,129,0.14),transparent_65%)]"
       />
 
-      <div className="container flex flex-col items-center text-center">
+      <div className="container flex flex-col items-center pb-16 text-center lg:pb-0">
         <motion.a
           href="#platform"
           initial={{ opacity: 0, y: 12 }}
@@ -162,8 +162,15 @@ export function Hero() {
         </motion.div>
       </div>
 
-      {/* Product visual: scroll-unfold + Apple-style mirror */}
-      <div ref={ref} className="container relative mt-10 pb-16 sm:mt-20 sm:pb-24">
+      {/*
+        Product visual: scroll-unfold + Apple-style mirror. Hidden below lg —
+        on a phone it just repeated the same CallCard that opens the
+        "Follow the call" section a screen later.
+      */}
+      <div
+        ref={ref}
+        className="container relative hidden pb-16 sm:mt-20 sm:pb-24 lg:block"
+      >
         <div className="perspective-2000 mx-auto max-w-3xl">
           <motion.div
             style={{ rotateX, scale }}
