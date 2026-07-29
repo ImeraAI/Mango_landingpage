@@ -41,6 +41,7 @@ export default function SignInPage() {
   const [password, setPassword] = React.useState('');
   const [loading, setLoading] = React.useState(false);
   const [errorMsg, setErrorMsg] = React.useState('');
+  const [notice, setNotice] = React.useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
