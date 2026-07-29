@@ -14,6 +14,7 @@ import {
   Loader2,
   ArrowLeft,
 } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -78,6 +79,14 @@ export function DemoBooking() {
   const [status, setStatus] = React.useState<'idle' | 'submitting' | 'success'>(
     'idle'
   );
+  /**
+   * Phones start with the four fields we actually validate; phone number,
+   * team size, call volume and the free-text goal sit behind a toggle. Eight
+   * inputs on a 390px screen reads as paperwork, and every optional one is a
+   * chance to abandon. They are never hidden from sm up, where the form is
+   * two columns and the whole thing fits without feeling long.
+   */
+  const [showOptional, setShowOptional] = React.useState(false);
 
   const set = (key: keyof Fields) => (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -109,7 +118,7 @@ export function DemoBooking() {
   }
 
   return (
-    <section className="relative overflow-hidden pt-32 pb-24 sm:pt-36">
+    <section className="relative overflow-hidden pb-16 pt-24 sm:pb-24 sm:pt-36">
       {/* ambient glow */}
       <div
         aria-hidden
@@ -124,30 +133,39 @@ export function DemoBooking() {
           Back to home
         </Link>
 
-        <div className="mt-8 grid gap-12 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
-          {/* Value column */}
+        <div className="mt-6 grid gap-8 sm:mt-8 sm:gap-12 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
+          {/*
+            Value column. On a phone this is the wall between the visitor and
+            the form, so it thins out to a headline, one line, three titles,
+            and a rating: enough to know what the demo is, short enough that
+            the first input is still reachable without a long scroll. The
+            supporting sentences and the testimonial return at sm.
+          */}
           <div>
             <span className="eyebrow">Book a demo</span>
-            <h1 className="mt-5 max-w-lg font-display text-4xl font-semibold leading-[1.08] tracking-tight text-slate-900 sm:text-5xl">
+            <h1 className="mt-3 max-w-lg font-display text-[1.75rem] font-semibold leading-[1.12] tracking-tight text-slate-900 sm:mt-5 sm:text-5xl sm:leading-[1.08]">
               See Mango answer your calls, live.
             </h1>
-            <p className="mt-5 max-w-lg text-lg leading-relaxed text-slate-600">
-              In 20 minutes you’ll watch a real call flow through Mango for your
-              trade. Answered, qualified, booked, dispatched, and invoiced. No
-              slides, no commitment.
+            <p className="mt-3 max-w-lg leading-relaxed text-slate-600 sm:mt-5 sm:text-lg">
+              A 20-minute walkthrough with a real call for your trade.
+              <span className="hidden sm:inline">
+                {' '}
+                Answered, qualified, booked, dispatched, and invoiced. No
+                slides, no commitment.
+              </span>
             </p>
 
-            <div className="mt-10 space-y-5">
+            <div className="mt-6 space-y-3 sm:mt-10 sm:space-y-5">
               {EXPECT.map((item) => (
-                <div key={item.title} className="flex gap-4">
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-brand-50 text-brand-600 ring-1 ring-inset ring-brand-100">
-                    <item.icon className="h-5 w-5" />
+                <div key={item.title} className="flex items-center gap-3 sm:items-start sm:gap-4">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-600 ring-1 ring-inset ring-brand-100 sm:h-11 sm:w-11 sm:rounded-2xl">
+                    <item.icon className="h-4 w-4 sm:h-5 sm:w-5" />
                   </span>
                   <div>
-                    <div className="font-semibold text-slate-900">
+                    <div className="text-sm font-semibold text-slate-900 sm:text-base">
                       {item.title}
                     </div>
-                    <div className="mt-1 text-sm leading-relaxed text-slate-600">
+                    <div className="mt-1 hidden text-sm leading-relaxed text-slate-600 sm:block">
                       {item.description}
                     </div>
                   </div>
@@ -155,20 +173,20 @@ export function DemoBooking() {
               ))}
             </div>
 
-            <div className="mt-10 rounded-2xl border border-slate-200/80 bg-slate-50/70 p-5">
+            <div className="mt-6 rounded-2xl border border-slate-200/80 bg-slate-50/70 p-3.5 sm:mt-10 sm:p-5">
               <div className="flex items-center gap-1 text-amber-400">
                 {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} className="h-4 w-4 fill-amber-400" />
+                  <Star key={i} className="h-3.5 w-3.5 fill-amber-400 sm:h-4 sm:w-4" />
                 ))}
-                <span className="ml-2 text-sm font-semibold text-slate-700">
+                <span className="ml-2 text-xs font-semibold text-slate-700 sm:text-sm">
                   4.9/5 from 500+ teams
                 </span>
               </div>
-              <p className="mt-3 text-sm leading-relaxed text-slate-600">
+              <p className="mt-3 hidden text-sm leading-relaxed text-slate-600 sm:block">
                 “Every emergency is answered, booked, and dispatched while I
                 sleep.”
               </p>
-              <p className="mt-2 text-sm font-medium text-slate-500">
+              <p className="mt-2 hidden text-sm font-medium text-slate-500 sm:block">
                 David Chen, Owner, AquaPlumb Services
               </p>
             </div>
@@ -176,7 +194,7 @@ export function DemoBooking() {
 
           {/* Form / success column */}
           <div className="lg:pt-2">
-            <div className="relative rounded-3xl border border-slate-200/80 bg-white p-6 shadow-lifted sm:p-8">
+            <div className="relative rounded-3xl border border-slate-200/80 bg-white p-5 shadow-lifted sm:p-8">
               <AnimatePresence mode="wait">
                 {status === 'success' ? (
                   <motion.div
@@ -223,14 +241,15 @@ export function DemoBooking() {
                     onSubmit={handleSubmit}
                     noValidate
                   >
-                    <h2 className="font-display text-xl font-semibold tracking-tight text-slate-900">
+                    <h2 className="font-display text-lg font-semibold tracking-tight text-slate-900 sm:text-xl">
                       Tell us about your business
                     </h2>
                     <p className="mt-1 text-sm text-slate-500">
-                      We’ll tailor the demo to your trade and call volume.
+                      We’ll tailor the demo to your trade
+                      <span className="hidden sm:inline"> and call volume</span>.
                     </p>
 
-                    <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                    <div className="mt-5 grid gap-3.5 sm:mt-6 sm:gap-4 sm:grid-cols-2">
                       <Field label="Full name" required error={errors.name} className="sm:col-span-2">
                         <Input
                           value={fields.name}
@@ -249,16 +268,6 @@ export function DemoBooking() {
                           placeholder="jordan@company.com"
                           aria-invalid={!!errors.email}
                           autoComplete="email"
-                        />
-                      </Field>
-
-                      <Field label="Phone" error={errors.phone}>
-                        <Input
-                          type="tel"
-                          value={fields.phone}
-                          onChange={set('phone')}
-                          placeholder="(555) 012-3456"
-                          autoComplete="tel"
                         />
                       </Field>
 
@@ -290,43 +299,74 @@ export function DemoBooking() {
                         </Select>
                       </Field>
 
-                      <Field label="Team size">
-                        <Select value={fields.teamSize} onChange={set('teamSize')}>
-                          <option value="" disabled>
-                            Select size
-                          </option>
-                          {TEAM_SIZES.map((t) => (
-                            <option key={t} value={t}>
-                              {t}
-                            </option>
-                          ))}
-                        </Select>
-                      </Field>
-
-                      <Field label="Monthly call volume">
-                        <Select value={fields.volume} onChange={set('volume')}>
-                          <option value="" disabled>
-                            Select volume
-                          </option>
-                          {CALL_VOLUMES.map((t) => (
-                            <option key={t} value={t}>
-                              {t}
-                            </option>
-                          ))}
-                        </Select>
-                      </Field>
-
-                      <Field
-                        label="What would you like to solve?"
-                        className="sm:col-span-2"
+                      {/*
+                        `display: contents` so these still lay themselves out
+                        as direct grid children when shown — a plain wrapper
+                        div would collapse all four into one grid cell.
+                      */}
+                      <div
+                        className={cn(
+                          showOptional ? 'contents' : 'hidden sm:contents'
+                        )}
                       >
-                        <Textarea
-                          value={fields.goal}
-                          onChange={set('goal')}
-                          placeholder="e.g. We miss too many after-hours emergency calls on weekends."
-                        />
-                      </Field>
+                        <Field label="Phone" error={errors.phone}>
+                          <Input
+                            type="tel"
+                            value={fields.phone}
+                            onChange={set('phone')}
+                            placeholder="(555) 012-3456"
+                            autoComplete="tel"
+                          />
+                        </Field>
+
+                        <Field label="Team size">
+                          <Select value={fields.teamSize} onChange={set('teamSize')}>
+                            <option value="" disabled>
+                              Select size
+                            </option>
+                            {TEAM_SIZES.map((t) => (
+                              <option key={t} value={t}>
+                                {t}
+                              </option>
+                            ))}
+                          </Select>
+                        </Field>
+
+                        <Field label="Monthly call volume">
+                          <Select value={fields.volume} onChange={set('volume')}>
+                            <option value="" disabled>
+                              Select volume
+                            </option>
+                            {CALL_VOLUMES.map((t) => (
+                              <option key={t} value={t}>
+                                {t}
+                              </option>
+                            ))}
+                          </Select>
+                        </Field>
+
+                        <Field
+                          label="What would you like to solve?"
+                          className="sm:col-span-2"
+                        >
+                          <Textarea
+                            value={fields.goal}
+                            onChange={set('goal')}
+                            placeholder="e.g. We miss too many after-hours emergency calls on weekends."
+                          />
+                        </Field>
+                      </div>
                     </div>
+
+                    {showOptional ? null : (
+                      <button
+                        type="button"
+                        onClick={() => setShowOptional(true)}
+                        className="mt-4 text-sm font-medium text-brand-700 underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/50 sm:hidden"
+                      >
+                        + Add phone, team size and call volume
+                      </button>
+                    )}
 
                     <Button
                       type="submit"

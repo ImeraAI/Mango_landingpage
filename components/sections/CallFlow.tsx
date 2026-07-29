@@ -17,6 +17,13 @@ import { ScheduleCard } from '@/components/mockups/ScheduleCard';
 import { DispatchBoard } from '@/components/mockups/DispatchBoard';
 import { FollowUpCard } from '@/components/mockups/FollowUpCard';
 
+/**
+ * One set of plain-spoken words for every breakpoint. This used to carry a
+ * second, more polished desktop voice ("The relationship keeps working"),
+ * but figurative copy makes a reader work out what the product actually did.
+ * Short literal sentences land the same on a phone and a 27" monitor, and
+ * there is only one place to edit them.
+ */
 type Stage = {
   time: string;
   label: string;
@@ -30,41 +37,41 @@ type Stage = {
 const STAGES: Stage[] = [
   {
     time: '9:47 PM',
-    label: 'Reception',
-    title: 'The call gets answered on the first ring.',
+    label: 'Answers the phone',
+    title: 'Someone picks up on the first ring.',
     description:
-      'A pipe bursts after hours. Instead of voicemail, Mango picks up in a warm, natural voice, calms the customer, and starts working the problem.',
-    bullets: ['Human-like conversation', '24/7/365 availability', 'Speaks in your company’s voice'],
+      'A pipe bursts at ten at night. Mango answers, calms the customer down, and gets to work.',
+    bullets: ['Sounds like a real person', 'Answers day and night', 'Never goes to voicemail'],
     icon: Phone,
     Mockup: CallCard,
   },
   {
     time: '9:47 PM',
-    label: 'Qualify & book',
-    title: 'The lead is qualified and scheduled.',
+    label: 'Books the job',
+    title: 'The job is booked before they hang up.',
     description:
-      'Mango captures the address, gauges urgency, confirms it’s an emergency, checks live availability, and locks in the earliest slot. No back-and-forth.',
-    bullets: ['Structured, trade-aware intake', 'Real-time calendar availability', 'Automatic emergency triage'],
+      'It takes the address, works out how bad it is, checks your calendar, and takes the soonest slot.',
+    bullets: ['Asks the right questions', 'Checks your real calendar', 'Emergencies go first'],
     icon: CalendarCheck,
     Mockup: ScheduleCard,
   },
   {
     time: '9:48 PM',
-    label: 'Dispatch',
-    title: 'The right technician is on the way.',
+    label: 'Sends a tech',
+    title: 'The right tech is already on the way.',
     description:
-      'It matches the job to the best available tech by skill, location, and rating, then notifies them instantly with the full context and a live route.',
-    bullets: ['Skill & location-based routing', 'Live ETA and map', 'Technician auto-notified'],
+      'Mango picks whoever is closest and best for the job, then sends them the details and directions.',
+    bullets: ['Closest, best-suited tech', 'Directions and arrival time', 'They are told automatically'],
     icon: Navigation,
     Mockup: DispatchBoard,
   },
   {
     time: 'Next day',
-    label: 'Follow-up',
-    title: 'The relationship keeps working.',
+    label: 'Checks back in',
+    title: 'They hear from you again the next day.',
     description:
-      'Mango checks in, earns a five-star review, and schedules the next maintenance reminder, quietly filling next season’s calendar while you sleep.',
-    bullets: ['Automated review requests', 'Maintenance rebooking reminders', 'Customer record kept in sync'],
+      'Mango asks how it went, asks for a review, and reminds them to book the next service.',
+    bullets: ['Asks for a review', 'Books the next visit', 'Keeps their details up to date'],
     icon: MessageSquare,
     Mockup: FollowUpCard,
   },
@@ -102,8 +109,8 @@ export function CallFlow() {
       <div className="container">
         <SectionHeading
           eyebrow="Follow the call"
-          title="One phone call, handled end to end."
-          description="Watch a single after-hours emergency flow through Mango, from the first ring to a five-star review. Nobody on your team has to lift a finger."
+          title="What happens when a customer calls you."
+          description="One late-night emergency, from the first ring to a five-star review. You don’t have to do any of it."
         />
 
         <div className="mt-10 grid min-w-0 gap-10 sm:mt-16 lg:grid-cols-2 lg:gap-16">
@@ -212,7 +219,10 @@ export function CallFlow() {
                           </span>
                           <span className="tabular-nums">{stage.time}</span>
                           <span className="text-slate-300">·</span>
-                          <span className="text-xs uppercase tracking-wide lg:text-sm">
+                          <span className="text-xs uppercase tracking-wide lg:hidden">
+                            Step {i + 1} of {STAGES.length} · {stage.label}
+                          </span>
+                          <span className="hidden text-sm uppercase tracking-wide lg:inline">
                             {stage.label}
                           </span>
                         </div>
@@ -223,15 +233,29 @@ export function CallFlow() {
                           {stage.description}
                         </p>
 
-                        {/* chips below lg, checklist on desktop */}
-                        <ul className="mt-3 flex flex-wrap gap-1.5 lg:mt-5 lg:block lg:space-y-2.5">
+                        {/* compact chips below lg, roomy checklist above */}
+                        <ul className="mt-3 flex flex-wrap gap-1.5 lg:hidden">
                           {stage.bullets.map((b) => (
                             <li
                               key={b}
-                              className="inline-flex items-center gap-1.5 rounded-full bg-slate-50 px-2 py-1 text-[0.7rem] text-slate-700 lg:flex lg:gap-3 lg:rounded-none lg:bg-transparent lg:px-0 lg:py-0 lg:text-sm"
+                              className="inline-flex items-center gap-1.5 rounded-full bg-slate-50 px-2 py-1 text-[0.7rem] text-slate-700"
                             >
-                              <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-brand-50 text-brand-600 lg:h-5 lg:w-5">
-                                <Check className="h-2.5 w-2.5 lg:h-3 lg:w-3" />
+                              <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-brand-50 text-brand-600">
+                                <Check className="h-2.5 w-2.5" />
+                              </span>
+                              {b}
+                            </li>
+                          ))}
+                        </ul>
+
+                        <ul className="mt-5 hidden space-y-2.5 lg:block">
+                          {stage.bullets.map((b) => (
+                            <li
+                              key={b}
+                              className="flex items-center gap-3 text-sm text-slate-700"
+                            >
+                              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-50 text-brand-600">
+                                <Check className="h-3 w-3" />
                               </span>
                               {b}
                             </li>

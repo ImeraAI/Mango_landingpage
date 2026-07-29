@@ -70,7 +70,7 @@ export function CallPlayer({
             : 'Play a recorded call handled by Mango'
       }
       className={cn(
-        'group relative flex w-full max-w-[240px] shrink-0 flex-col rounded-2xl border border-slate-200/70 bg-slate-50/80 p-4 text-left transition-all duration-200',
+        'group relative flex w-full shrink-0 flex-col sm:max-w-[240px] rounded-2xl border border-slate-200/70 bg-slate-50/80 p-4 text-left transition-all duration-200',
         'hover:border-brand-200 hover:bg-white hover:shadow-card',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/50 focus-visible:ring-offset-2',
         'disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:border-slate-200/70 disabled:hover:bg-slate-50/80 disabled:hover:shadow-none',

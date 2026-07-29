@@ -23,10 +23,22 @@ export default function Page() {
         {/* Hook */}
         <Hero />
         <LogoCloud />
-        {/* Product story: follow one call end to end */}
-        <CallFlow />
-        {/* Capabilities & proof */}
-        <Platform />
+        {/*
+          Below lg these two swap: the phone reader gets the Platform overview
+          first, then the step-by-step call story. Desktop keeps story-then-
+          capabilities. Flex order is used so each section stays a plain
+          full-width block in the normal flow.
+        */}
+        <div className="flex flex-col">
+          {/* Product story: follow one call end to end */}
+          <div className="order-2 lg:order-1">
+            <CallFlow />
+          </div>
+          {/* Capabilities & proof */}
+          <div className="order-1 lg:order-2">
+            <Platform />
+          </div>
+        </div>
         <CommandCenterSection />
         <Industries />
         <Metrics />
