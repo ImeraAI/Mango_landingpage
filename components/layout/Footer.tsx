@@ -48,8 +48,8 @@ export function Footer() {
   return (
     <footer className="border-t border-slate-200/80 bg-white">
       <div className="container py-16">
-        <div className="grid gap-10 lg:grid-cols-[1.4fr_repeat(4,1fr)]">
-          <div className="max-w-xs">
+        <div className="grid grid-cols-2 gap-x-8 gap-y-10 lg:grid-cols-[1.4fr_repeat(4,1fr)]">
+          <div className="col-span-2 max-w-xs lg:col-span-1">
             <Logo />
             <p className="mt-4 text-sm leading-relaxed text-slate-600">
               The intelligent front office for modern field service companies.

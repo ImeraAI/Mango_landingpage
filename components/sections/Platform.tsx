@@ -57,26 +57,27 @@ export function Platform() {
       />
 
       {/*
-        Mobile stacked every tile full-width with its own paragraph, which read
-        as one long block of prose. Below sm the three supporting tiles drop to
-        a two-up icon+label grid and their copy is deferred to wider screens.
+        Every tile shares one anatomy — icon chip, headline, one payoff line —
+        so the grid reads as a set rather than four unrelated layouts. The
+        supporting four are one-span each: a clean 2x2 on phones, a single row
+        of four on desktop. Nothing is left orphaned across a half row.
       */}
-      <div className="mt-10 grid grid-cols-2 gap-3 sm:mt-16 sm:gap-4 lg:grid-cols-6">
+      <div className="mt-10 grid grid-cols-2 gap-3 sm:mt-16 sm:gap-4 lg:grid-cols-4">
         {/* Voice AI spotlight */}
-        <Tile className="col-span-2 lg:col-span-4">
+        <Tile className="col-span-2 lg:col-span-3">
           <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
             <div className="max-w-md">
               <IconChip icon={PhoneCall} />
               <h3 className="mt-4 font-display text-lg font-semibold tracking-tight text-slate-900 sm:mt-5 sm:text-xl">
-                Voice AI that sounds unmistakably human
+                Your callers will never know it isn’t a person
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-slate-600 sm:text-[0.95rem]">
-                Conversational models that pause, breathe, and handle
-                interruptions naturally.
+                It pauses, breathes, and handles interruptions like a top
+                dispatcher on their best day.
                 <span className="hidden sm:inline">
                   {' '}
-                  They are trained on your services, pricing, and emergency
-                  protocols so every answer is on-brand.
+                  Trained on your services, your pricing, and your emergency
+                  protocols, so every answer is on-brand.
                 </span>
               </p>
             </div>
@@ -84,64 +85,79 @@ export function Platform() {
           </div>
         </Tile>
 
-        {/* Uptime stat */}
-        <Tile className="col-span-2 lg:col-span-2">
-          <div className="flex items-center gap-4 sm:block">
-            <IconChip icon={ShieldCheck} />
-            <div className="sm:mt-5">
-              <div className="font-display text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
-                0
-              </div>
-              <div className="mt-0.5 text-sm font-medium text-slate-900 sm:mt-1">
-                Missed calls
-              </div>
-              <p className="mt-1.5 text-sm leading-relaxed text-slate-600 sm:mt-2">
-                Every call answered on the first ring.
-                <span className="hidden sm:inline">
-                  {' '}
-                  Nights, weekends, and holidays included.
-                </span>
-              </p>
-            </div>
+        {/* Headline stat */}
+        <Tile className="col-span-2 lg:col-span-1">
+          <IconChip icon={ShieldCheck} />
+          <div className="mt-4 flex items-baseline gap-2 sm:mt-5">
+            <span className="font-display text-4xl font-semibold leading-none tracking-tight text-brand-600 sm:text-5xl">
+              0
+            </span>
+            <span className="font-display text-lg font-semibold tracking-tight text-slate-900">
+              missed calls
+            </span>
           </div>
+          <p className="mt-2 text-sm leading-relaxed text-slate-600">
+            Every ring answered — nights, weekends and holidays included.
+          </p>
         </Tile>
 
         {/* Scheduling */}
-        <Tile className="col-span-1 lg:col-span-2">
+        <Tile className="col-span-1">
           <IconChip icon={CalendarClock} />
           <h3 className="mt-3 font-display text-sm font-semibold tracking-tight text-slate-900 sm:mt-5 sm:text-lg">
-            Smart scheduling
+            Booked on the spot
           </h3>
-          <p className="mt-2 hidden text-sm leading-relaxed text-slate-600 sm:block">
-            Reads live availability and books the right slot, with emergency
-            jobs triaged to the front of the line.
+          <p className="mt-1.5 text-xs leading-relaxed text-slate-600 sm:mt-2 sm:text-sm">
+            Reads your live calendar and grabs the right slot.
+            <span className="hidden sm:inline">
+              {' '}
+              Emergencies jump the queue automatically.
+            </span>
           </p>
         </Tile>
 
         {/* Dispatch */}
-        <Tile className="col-span-1 lg:col-span-2">
+        <Tile className="col-span-1">
           <IconChip icon={Route} />
           <h3 className="mt-3 font-display text-sm font-semibold tracking-tight text-slate-900 sm:mt-5 sm:text-lg">
-            Instant dispatch
+            Right tech, right away
           </h3>
-          <p className="mt-2 hidden text-sm leading-relaxed text-slate-600 sm:block">
-            Matches each job to the best tech by skill, location, and rating,
-            then sends the route automatically.
+          <p className="mt-1.5 text-xs leading-relaxed text-slate-600 sm:mt-2 sm:text-sm">
+            Matched by skill and location, routed in seconds.
+            <span className="hidden sm:inline">
+              {' '}
+              They get the job, the address, and the ETA.
+            </span>
           </p>
         </Tile>
 
-        {/* Invoicing + follow-up combined */}
-        <Tile className="col-span-2 lg:col-span-2">
-          <div className="flex items-center gap-2 sm:gap-3">
-            <IconChip icon={ReceiptText} />
-            <IconChip icon={MessagesSquare} />
-          </div>
+        {/* Invoicing */}
+        <Tile className="col-span-1">
+          <IconChip icon={ReceiptText} />
           <h3 className="mt-3 font-display text-sm font-semibold tracking-tight text-slate-900 sm:mt-5 sm:text-lg">
-            Invoices &amp; follow-ups
+            Paid without chasing
           </h3>
-          <p className="mt-2 hidden text-sm leading-relaxed text-slate-600 sm:block">
-            Drafts itemized invoices from the transcript and runs review
-            requests and rebooking reminders on autopilot.
+          <p className="mt-1.5 text-xs leading-relaxed text-slate-600 sm:mt-2 sm:text-sm">
+            Itemized invoices drafted straight from the job.
+            <span className="hidden sm:inline">
+              {' '}
+              Sent before the van is off the driveway.
+            </span>
+          </p>
+        </Tile>
+
+        {/* Follow-ups */}
+        <Tile className="col-span-1">
+          <IconChip icon={MessagesSquare} />
+          <h3 className="mt-3 font-display text-sm font-semibold tracking-tight text-slate-900 sm:mt-5 sm:text-lg">
+            One job becomes the next
+          </h3>
+          <p className="mt-1.5 text-xs leading-relaxed text-slate-600 sm:mt-2 sm:text-sm">
+            Review requests and rebooking reminders on autopilot.
+            <span className="hidden sm:inline">
+              {' '}
+              Next season’s calendar fills itself.
+            </span>
           </p>
         </Tile>
       </div>
