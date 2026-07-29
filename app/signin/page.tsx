@@ -195,10 +195,10 @@ export default function SignInPage() {
             <p className="mt-6 border-t border-slate-100 pt-5 text-center text-sm text-slate-500">
               No account yet?{' '}
               <Link
-                href="/demo"
+                href="/signup"
                 className="font-semibold text-brand-700 hover:text-brand-800"
               >
-                Book a demo
+                Sign up
               </Link>
             </p>
           </div>
