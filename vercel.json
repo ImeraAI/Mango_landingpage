@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/dashboard",
+      "destination": "https://plumbingimera-production.up.railway.app"
+    },
+    {
+      "source": "/dashboard/:path*",
+      "destination": "https://plumbingimera-production.up.railway.app/:path*"
+    }
+  ]
+}

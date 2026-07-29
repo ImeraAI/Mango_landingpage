@@ -10,6 +10,20 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async rewrites() {
+    const dashboardUrl = process.env.DASHBOARD_URL || 'https://plumbingimera-production.up.railway.app';
+    return [
+      {
+        source: '/dashboard',
+        destination: `${dashboardUrl}`,
+      },
+      {
+        source: '/dashboard/:path*',
+        destination: `${dashboardUrl}/:path*`,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
+

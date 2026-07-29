@@ -37,15 +37,10 @@ function GoogleMark({ className }: { className?: string }) {
 export default function SignInPage() {
   const [notice, setNotice] = React.useState(false);
 
-  /**
-   * There is no auth backend yet, so this deliberately sends nothing
-   * anywhere. Do not wire a network call here until there is a real endpoint
-   * to receive it — a form that accepts a password and quietly discards it is
-   * worse than one that says so.
-   */
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setNotice(true);
+    // Redirects user to the /dashboard path served by proxy rewrite
+    window.location.href = '/dashboard';
   }
 
   return (
