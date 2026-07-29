@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { ArrowRight, Info, Fingerprint } from 'lucide-react';
+import { ArrowRight, Info, Fingerprint, Eye, EyeOff } from 'lucide-react';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
@@ -42,6 +42,7 @@ export default function SignInPage() {
   const [loading, setLoading] = React.useState(false);
   const [errorMsg, setErrorMsg] = React.useState('');
   const [notice, setNotice] = React.useState(false);
+  const [showPassword, setShowPassword] = React.useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -126,17 +127,39 @@ export default function SignInPage() {
                     Forgot it? Call us.
                   </span>
                 </div>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  className="h-11 w-full rounded-xl border border-slate-200 bg-white px-3.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/30"
-                />
+                <div className="relative">
+                  <input
+                    id="password"
+                    name="password"
+                    type={showPassword ? 'text' : 'password'}
+                    autoComplete="current-password"
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="••••••••"
+                    className="h-11 w-full rounded-xl border border-slate-200 bg-white pl-3.5 pr-11 text-sm text-slate-900 placeholder:text-slate-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/30"
+                  />
+                  {/*
+                    Outside the label and typed as a button, so a click reveals
+                    the value instead of re-focusing the input, and Enter here
+                    never submits the form. `aria-pressed` is what tells a
+                    screen reader the password is currently visible.
+                  */}
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((v) => !v)}
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
+                    aria-pressed={showPassword}
+                    aria-controls="password"
+                    className="absolute inset-y-0 right-0 flex w-11 items-center justify-center rounded-r-xl text-slate-400 transition-colors hover:text-slate-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40"
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
+                  </button>
+                </div>
               </div>
 
               <Button type="submit" variant="brand" size="lg" className="w-full" disabled={loading}>
