@@ -21,9 +21,16 @@ const nextConfig: NextConfig = {
         source: '/dashboard/:path*',
         destination: `${dashboardUrl}/:path*`,
       },
+      {
+        source: '/assets/:path*',
+        destination: `${dashboardUrl}/assets/:path*`,
+      },
+      {
+        source: '/images/:path*',
+        destination: `${dashboardUrl}/images/:path*`,
+      },
     ];
   },
 };
 
 export default nextConfig;
-

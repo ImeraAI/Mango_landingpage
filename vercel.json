@@ -7,6 +7,14 @@
     {
       "source": "/dashboard/:path*",
       "destination": "https://plumbingimera-production.up.railway.app/:path*"
+    },
+    {
+      "source": "/assets/:path*",
+      "destination": "https://plumbingimera-production.up.railway.app/assets/:path*"
+    },
+    {
+      "source": "/images/:path*",
+      "destination": "https://plumbingimera-production.up.railway.app/images/:path*"
     }
   ]
 }
