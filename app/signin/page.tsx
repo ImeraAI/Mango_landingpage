@@ -9,6 +9,8 @@ import { Button } from '@/components/ui/button';
 import { Logo } from '@/components/primitives/Logo';
 import { AuthBackdrop } from '@/components/primitives/AuthBackdrop';
 
+import { supabase } from '@/lib/supabase';
+
 /** Google's mark, inlined — the CSP blocks remote assets and an <img> here
  *  would be a render-blocking request for a 20px icon. */
 function GoogleMark({ className }: { className?: string }) {
@@ -35,11 +37,29 @@ function GoogleMark({ className }: { className?: string }) {
 }
 
 export default function SignInPage() {
-  const [notice, setNotice] = React.useState(false);
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
+  const [errorMsg, setErrorMsg] = React.useState('');
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    // Redirects user to the /dashboard path served by proxy rewrite
+    setErrorMsg('');
+    setLoading(true);
+
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    setLoading(false);
+
+    if (error) {
+      setErrorMsg(error.message);
+      return;
+    }
+
+    // Redirect user to the /dashboard path served by proxy rewrite
     window.location.href = '/dashboard';
   }
 
@@ -66,6 +86,12 @@ export default function SignInPage() {
               Welcome back. Enter your details to reach your dashboard.
             </p>
 
+            {errorMsg && (
+              <div className="mt-4 rounded-xl border border-red-200 bg-red-50 p-3 text-xs text-red-700">
+                {errorMsg}
+              </div>
+            )}
+
             <form onSubmit={handleSubmit} className="mt-7 space-y-4">
               <div>
                 <label
@@ -80,6 +106,8 @@ export default function SignInPage() {
                   type="email"
                   autoComplete="email"
                   required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@yourshop.com"
                   className="h-11 w-full rounded-xl border border-slate-200 bg-white px-3.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/30"
                 />
@@ -103,13 +131,15 @@ export default function SignInPage() {
                   type="password"
                   autoComplete="current-password"
                   required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
                   className="h-11 w-full rounded-xl border border-slate-200 bg-white px-3.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/30"
                 />
               </div>
 
-              <Button type="submit" variant="brand" size="lg" className="w-full">
-                Sign in
+              <Button type="submit" variant="brand" size="lg" className="w-full" disabled={loading}>
+                {loading ? 'Signing in...' : 'Sign in'}
                 <ArrowRight className="h-4 w-4" />
               </Button>
             </form>
