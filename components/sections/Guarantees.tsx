@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import { Section } from '@/components/primitives/Section';
 import { Reveal } from '@/components/primitives/Reveal';
+import { Marquee } from '@/components/primitives/Marquee';
 
 /**
  * Award-badge styling, but every claim here is a promise Mango controls
@@ -83,14 +84,27 @@ export function Guarantees() {
         </p>
       </Reveal>
 
-      <div className="mt-10 flex flex-wrap justify-center gap-4 sm:gap-5">
-        {GUARANTEES.map((g, i) => (
-          <Reveal key={g.title} delay={i * 0.07}>
-            {/* Outer clip paints the chevron edge; the inset inner clip
-                leaves it showing as a border on all sides. */}
+      {/*
+        A single continuous lane instead of a wrapping grid: five pennants
+        stacked into three ragged rows on a phone, which buried the last two.
+        The Marquee duplicates the set so the first pennant re-enters behind
+        the last one; hovering pauses it.
+      */}
+      <Reveal delay={0.1}>
+        <Marquee
+          className="mt-10 py-2"
+          duration="34s"
+          gapClassName="gap-4 pr-4 sm:gap-5 sm:pr-5"
+        >
+          {/* Doubled so the track is wider than a desktop container; a track
+              narrower than the lane would leave a visible gap each loop. */}
+          {[...GUARANTEES, ...GUARANTEES].map((g, i) => (
+            /* Outer clip paints the chevron edge; the inset inner clip
+               leaves it showing as a border on all sides. */
             <div
+              key={`${g.title}-${i}`}
               style={{ clipPath: PENNANT }}
-              className={`${g.chevron} w-[9.5rem] pb-px shadow-card transition-transform duration-300 hover:-translate-y-1 sm:w-[10.5rem]`}
+              className={`${g.chevron} w-[9.5rem] shrink-0 pb-px shadow-card transition-transform duration-300 hover:-translate-y-1 sm:w-[10.5rem]`}
             >
               <div
                 style={{ clipPath: PENNANT }}
@@ -110,9 +124,9 @@ export function Guarantees() {
                 </div>
               </div>
             </div>
-          </Reveal>
-        ))}
-      </div>
+          ))}
+        </Marquee>
+      </Reveal>
     </Section>
   );
 }

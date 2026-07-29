@@ -26,7 +26,7 @@ export function CallCard({ className }: { className?: string }) {
       )}
     >
       {/* header */}
-      <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4">
+      <div className="flex items-center justify-between border-b border-slate-100 px-4 py-3.5 sm:px-5 sm:py-4">
         <div className="flex items-center gap-3">
           <span className="relative flex h-9 w-9 items-center justify-center rounded-full bg-brand-50 text-brand-600">
             <Phone className="h-4 w-4" />
@@ -54,7 +54,7 @@ export function CallCard({ className }: { className?: string }) {
       </div>
 
       {/* transcript */}
-      <div className="space-y-3 px-5 py-5">
+      <div className="space-y-3 px-4 py-4 sm:px-5 sm:py-5">
         <div className="flex justify-start">
           <div className="max-w-[80%] rounded-2xl rounded-tl-md bg-slate-100 px-4 py-2.5 text-sm leading-relaxed text-slate-700">
             Hi, my water heater burst and it&apos;s flooding the basement.
@@ -71,7 +71,7 @@ export function CallCard({ className }: { className?: string }) {
       </div>
 
       {/* captured fields */}
-      <div className="border-t border-slate-100 bg-slate-50/70 px-5 py-4">
+      <div className="border-t border-slate-100 bg-slate-50/70 px-4 py-3.5 sm:px-5 sm:py-4">
         <div className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
           <ShieldCheck className="h-3.5 w-3.5 text-brand-600" />
           Captured by Mango

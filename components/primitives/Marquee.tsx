@@ -10,11 +10,14 @@ export function Marquee({
   className,
   duration = '40s',
   reverse = false,
+  /** Spacing between items and before the repeated track. */
+  gapClassName = 'gap-12 pr-12',
 }: {
   children: React.ReactNode;
   className?: string;
   duration?: string;
   reverse?: boolean;
+  gapClassName?: string;
 }) {
   return (
     <div
@@ -26,7 +29,8 @@ export function Marquee({
           key={i}
           aria-hidden={i === 1}
           className={cn(
-            'flex shrink-0 items-center gap-12 pr-12 animate-marquee group-hover:[animation-play-state:paused]',
+            'flex shrink-0 items-center animate-marquee group-hover:[animation-play-state:paused]',
+            gapClassName,
             reverse && '[animation-direction:reverse]'
           )}
         >
