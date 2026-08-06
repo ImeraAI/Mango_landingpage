@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "blog:images": "node scripts/sync-blog-images.mjs",
+    "predev": "npm run blog:images",
     "dev": "next dev",
+    "prebuild": "npm run blog:images",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -19,10 +22,16 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^11.11.9",
+    "gray-matter": "^4.0.3",
     "lucide-react": "^0.468.0",
     "next": "^15.3.9",
+    "next-mdx-remote": "^6.0.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "reading-time": "^1.5.0",
+    "rehype-slug": "^6.0.0",
+    "remark-gfm": "^4.0.1",
+    "server-only": "^0.0.1",
     "tailwind-merge": "^3.6.0",
     "tailwindcss-animate": "^1.0.7"
   },
