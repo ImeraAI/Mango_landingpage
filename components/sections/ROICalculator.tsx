@@ -9,9 +9,15 @@ import { Section } from '@/components/primitives/Section';
 import { SectionHeading } from '@/components/primitives/SectionHeading';
 import { Slider } from '@/components/ui/slider';
 import { Button } from '@/components/ui/button';
+import { ROI_PLAN } from '@/content/pricing';
 
-const MANGO_BASE = 99;
-const PER_CALL = 0.5;
+/**
+ * Read off the plan itself rather than retyped. These two numbers used to be
+ * hardcoded here, drifted from the pricing table, and an audit caught the site
+ * quoting two different Starter prices on the same page.
+ */
+const MANGO_BASE = ROI_PLAN.monthly ?? 99;
+const PER_CALL = ROI_PLAN.perCall?.rate ?? 0.5;
 
 export function ROICalculator() {
   const [salary, setSalary] = React.useState(4000);
@@ -33,7 +39,7 @@ export function ROICalculator() {
             align="left"
             eyebrow="Check your numbers"
             title="What are you paying to answer the phone?"
-            description="Move the sliders to match your business."
+            description={`Move the sliders to match your business. Costs are modelled on the ${ROI_PLAN.name} plan: $${MANGO_BASE} a month plus $${PER_CALL.toFixed(2)} a call.`}
           />
 
           <div className="mt-10 space-y-8">
@@ -135,7 +141,8 @@ export function ROICalculator() {
             {/* One line carries the trial terms and the pricing basis. The
                 estimate disclaimer has to stay: these are made-up inputs. */}
             <p className="mt-3 text-center text-xs text-slate-400">
-              No credit card. {formatUSD(MANGO_BASE)}/mo + 50¢ per call.
+              No credit card. {formatUSD(MANGO_BASE)}/mo +{' '}
+              {(PER_CALL * 100).toFixed(0)}¢ per call.
               Estimate only.
             </p>
           </div>

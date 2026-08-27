@@ -16,5 +16,12 @@
       "source": "/images/:path*",
       "destination": "https://plumbingimera-production.up.railway.app/images/:path*"
     }
+  ],
+  "redirects": [
+    {
+      "source": "/customers",
+      "destination": "/#testimonials",
+      "permanent": true
+    }
   ]
 }

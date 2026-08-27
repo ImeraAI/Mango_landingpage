@@ -3,7 +3,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, Play, Star, TrendingUp, FileText, Clock } from 'lucide-react';
+import { ArrowRight, Play, Wrench, TrendingUp, FileText, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { GridBackground } from '@/components/primitives/GridBackground';
 import { TrustStrip } from '@/components/primitives/TrustStrip';
@@ -140,21 +140,31 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 0.35 }}
           className="mt-6 flex flex-col items-center gap-3 sm:mt-8 sm:gap-4"
         >
+          {/*
+            This row used to read "4.9/5 ★★★★★ · Trusted by 500+ home service
+            teams". Both were asserted with nothing behind them — no rating
+            platform, no customer list — which is the kind of claim that costs
+            more trust than it buys the moment a reader looks for the source.
+            What replaces it is the same size and shape, but every word of it
+            is checkable against the product: the trades it is built for, and
+            what it does. Put the rating back the day there is a G2, Capterra
+            or Google Business Profile page to link it to.
+          */}
           <div className="flex flex-row flex-wrap items-center justify-center gap-x-3 gap-y-1 text-sm text-slate-500 sm:gap-4">
-            <span className="inline-flex items-center gap-1">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Star
-                  key={i}
-                  className="h-4 w-4 fill-amber-400 text-amber-400"
-                />
-              ))}
-              <span className="ml-1 font-semibold text-slate-800">4.9/5</span>
+            <span className="inline-flex items-center gap-1.5">
+              <Wrench className="h-4 w-4 text-brand-600" strokeWidth={2.25} />
+              Built for{' '}
+              <Link
+                href="/industries"
+                className="font-semibold text-slate-800 underline decoration-slate-300 underline-offset-4 transition-colors hover:decoration-brand-500"
+              >
+                plumbing, HVAC, electrical
+              </Link>{' '}
+              <span className="hidden sm:inline">and fire &amp; safety</span>
             </span>
-            <span className="h-4 w-px bg-slate-200" />
-            <span>
-              Trusted by{' '}
-              <span className="font-semibold text-slate-800">500+</span>{' '}
-              <span className="hidden sm:inline">home service </span>teams
+            <span className="hidden h-4 w-px bg-slate-200 sm:block" />
+            <span className="hidden sm:inline">
+              Answering in your company&apos;s voice, 24/7
             </span>
           </div>
 

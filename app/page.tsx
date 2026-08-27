@@ -10,14 +10,26 @@ import { Metrics } from '@/components/sections/Metrics';
 import { ROICalculator } from '@/components/sections/ROICalculator';
 import { Integrations } from '@/components/sections/Integrations';
 import { Testimonials } from '@/components/sections/Testimonials';
+import { Comparison } from '@/components/sections/Comparison';
 import { Pricing } from '@/components/sections/Pricing';
 import { Guarantees } from '@/components/sections/Guarantees';
 import { FAQ } from '@/components/sections/FAQ';
+import { LatestPosts } from '@/components/sections/LatestPosts';
 import { FinalCTA } from '@/components/sections/FinalCTA';
+import { JsonLd } from '@/components/seo/JsonLd';
+import { faqSchema, softwareApplicationSchema } from '@/lib/schema';
 
 export default function Page() {
   return (
     <>
+      {/*
+        The homepage's own structured data. Organization and WebSite live in
+        the layout; these two describe what this page specifically offers —
+        the product with its real plan prices, and the six FAQ answers that
+        are now all present in the HTML below.
+      */}
+      <JsonLd id="ld-software" schema={softwareApplicationSchema()} />
+      <JsonLd id="ld-faq" schema={faqSchema()} />
       <Header />
       <main className="overflow-x-clip bg-white">
         {/* Hook */}
@@ -46,10 +58,13 @@ export default function Page() {
         <ROICalculator />
         <Integrations />
         <Testimonials />
-        {/* Decision */}
+        {/* Decision — the competitive set first, then our own plans */}
+        <Comparison />
         <Pricing />
         <Guarantees />
         <FAQ />
+        {/* Dated, editorial internal links — the homepage had neither. */}
+        <LatestPosts />
         <FinalCTA />
       </main>
       <Footer />

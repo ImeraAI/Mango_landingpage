@@ -2,6 +2,9 @@ import type { Metadata } from 'next';
 import { Inter, Inter_Tight } from 'next/font/google';
 import './globals.css';
 import { cn } from '@/lib/utils';
+import { SITE_URL, SITE_NAME } from '@/lib/site';
+import { JsonLd } from '@/components/seo/JsonLd';
+import { organizationSchema, websiteSchema } from '@/lib/schema';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -16,7 +19,7 @@ const interTight = Inter_Tight({
   display: 'swap',
 });
 
-const siteUrl = 'https://mango.ai';
+const siteUrl = SITE_URL;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -26,20 +29,16 @@ export const metadata: Metadata = {
   },
   description:
     'Mango answers every call, qualifies leads, dispatches technicians, schedules jobs, drafts invoices, and follows up automatically. It is a 24/7 AI front office for plumbing, HVAC, electrical, and fire & safety teams.',
-  keywords: [
-    'AI receptionist',
-    'home services software',
-    'HVAC dispatch software',
-    'plumbing answering service',
-    'AI call answering',
-    'field service automation',
-    'technician dispatch',
-  ],
-  authors: [{ name: 'Mango' }],
+  applicationName: SITE_NAME,
+  authors: [{ name: SITE_NAME, url: siteUrl }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
+  alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
     url: siteUrl,
-    siteName: 'Mango',
+    siteName: SITE_NAME,
+    locale: 'en_US',
     title: 'Mango: The AI Receptionist for Home Service Businesses',
     description:
       'Never miss another service call. Mango is the 24/7 AI front office that answers, books, dispatches, invoices, and follows up. Built for the trades.',
@@ -73,7 +72,16 @@ export default function RootLayout({
       suppressHydrationWarning
       className={cn(inter.variable, interTight.variable)}
     >
-      <body>{children}</body>
+      <body>
+        {/*
+          Sitewide identity. Rendered in the layout so every route carries it,
+          including the ones that are plain prose. `@id` is a stable URL so the
+          per-page schemas can point back at this node instead of restating it.
+        */}
+        <JsonLd id="ld-organization" schema={organizationSchema()} />
+        <JsonLd id="ld-website" schema={websiteSchema()} />
+        {children}
+      </body>
     </html>
   );
 }

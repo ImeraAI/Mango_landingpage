@@ -12,6 +12,7 @@ import {
   Star,
   ShieldCheck,
   Loader2,
+  AlertCircle,
   ArrowLeft,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -21,6 +22,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select } from '@/components/ui/select';
 import { Waveform } from '@/components/mockups/Waveform';
+import { BOTCHECK_FIELD, submitToWeb3Forms } from '@/lib/web3forms';
 
 const EXPECT = [
   {
@@ -79,6 +81,19 @@ export function DemoBooking() {
   const [status, setStatus] = React.useState<'idle' | 'submitting' | 'success'>(
     'idle'
   );
+  const [submitError, setSubmitError] = React.useState<string | null>(null);
+  /**
+   * Two cheap spam gates that cost a real visitor nothing: a hidden input
+   * only a fill-everything bot touches, and the time the form has been open.
+   * A CAPTCHA would cost every human a puzzle to stop the same traffic.
+   */
+  const [botcheck, setBotcheck] = React.useState('');
+  // Stamped on mount, not on render: this component is server-rendered too,
+  // and a build-time timestamp would make every visit look hours old.
+  const startedAt = React.useRef(0);
+  React.useEffect(() => {
+    startedAt.current = Date.now();
+  }, []);
   /**
    * Phones start with the four fields we actually validate; phone number,
    * team size, call volume and the free-text goal sit behind a toggle. Eight
@@ -93,6 +108,7 @@ export function DemoBooking() {
   ) => {
     setFields((f) => ({ ...f, [key]: e.target.value }));
     setErrors((prev) => ({ ...prev, [key]: undefined }));
+    setSubmitError(null);
   };
 
   function validate() {
@@ -111,10 +127,32 @@ export function DemoBooking() {
     e.preventDefault();
     if (!validate()) return;
     setStatus('submitting');
-    // Front-end demo: no backend wired yet. Simulate the request round-trip,
-    // then show confirmation. Swap this for a POST to your CRM / booking API.
-    await new Promise((r) => setTimeout(r, 1100));
-    setStatus('success');
+    setSubmitError(null);
+
+    const result = await submitToWeb3Forms({
+      subject: `Demo request — ${fields.company.trim()} (${fields.trade})`,
+      fromName: 'Mango demo form',
+      botcheck,
+      startedAt: startedAt.current,
+      fields: {
+        name: fields.name,
+        email: fields.email,
+        company: fields.company,
+        phone: fields.phone,
+        trade: fields.trade,
+        team_size: fields.teamSize,
+        monthly_call_volume: fields.volume,
+        goal: fields.goal,
+        source: 'mangoaiusa.com/demo',
+      },
+    });
+
+    if (result.ok) {
+      setStatus('success');
+      return;
+    }
+    setStatus('idle');
+    setSubmitError(result.error);
   }
 
   return (
@@ -249,6 +287,24 @@ export function DemoBooking() {
                       <span className="hidden sm:inline"> and call volume</span>.
                     </p>
 
+                    {/*
+                      Honeypot. Hidden from sight and from assistive tech, and
+                      taken out of the tab order, so the only thing that ever
+                      fills it is a script walking the DOM.
+                    */}
+                    <input
+                      type="checkbox"
+                      name={BOTCHECK_FIELD}
+                      className="hidden"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      aria-hidden="true"
+                      checked={botcheck !== ''}
+                      onChange={(e) =>
+                        setBotcheck(e.target.checked ? 'true' : '')
+                      }
+                    />
+
                     <div className="mt-5 grid gap-3.5 sm:mt-6 sm:gap-4 sm:grid-cols-2">
                       <Field label="Full name" required error={errors.name} className="sm:col-span-2">
                         <Input
@@ -367,6 +423,16 @@ export function DemoBooking() {
                         + Add phone, team size and call volume
                       </button>
                     )}
+
+                    {submitError ? (
+                      <div
+                        role="alert"
+                        className="mt-5 flex items-start gap-2 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700"
+                      >
+                        <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
+                        <span>{submitError}</span>
+                      </div>
+                    ) : null}
 
                     <Button
                       type="submit"

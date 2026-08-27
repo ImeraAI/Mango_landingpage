@@ -2,6 +2,7 @@ import * as React from 'react';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { Logo } from '@/components/primitives/Logo';
+import { CONTACT } from '@/content/contact';
 
 const COLUMNS = [
   {
@@ -27,9 +28,9 @@ const COLUMNS = [
     title: 'Company',
     links: [
       { label: 'About', href: '/about' },
-      { label: 'Customers', href: '/#testimonials' },
+      { label: 'Customers', href: '/customers' },
       { label: 'Careers', href: '/careers' },
-      { label: 'Contact', href: '/demo' },
+      { label: 'Contact', href: '/contact' },
     ],
   },
   {
@@ -37,8 +38,9 @@ const COLUMNS = [
     links: [
       { label: 'Pricing', href: '/pricing' },
       { label: 'ROI calculator', href: '/#roi' },
-      { label: 'Integrations', href: '/#integrations' },
+      { label: 'Integrations', href: '/integrations' },
       { label: 'Blog', href: '/blog' },
+      { label: 'How it works', href: '/how-it-works' },
       { label: 'Security', href: '/security' },
     ],
   },
@@ -55,6 +57,22 @@ export function Footer() {
               The intelligent front office for modern field service companies.
               Every call answered, booked, and followed up, 24/7.
             </p>
+            {/*
+              A reachable address in the footer, on every page. An audit
+              flagged that a product whose pitch is "we answer your phone" had
+              no contact detail anywhere on the site; the footer is where a
+              reader looks for it first, and where a crawler expects it.
+            */}
+            {CONTACT.supportEmail ? (
+              <p className="mt-4 text-sm text-slate-600">
+                <a
+                  href={`mailto:${CONTACT.supportEmail}`}
+                  className="font-medium text-slate-700 underline decoration-slate-300 underline-offset-4 transition-colors hover:decoration-brand-500"
+                >
+                  {CONTACT.supportEmail}
+                </a>
+              </p>
+            ) : null}
             <Link
               href="/demo"
               className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700 transition-colors hover:text-brand-800"

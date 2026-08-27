@@ -138,6 +138,11 @@ function parseFile(filename: string): BlogPost {
     excerpt: requireString(data.excerpt, 'excerpt', filename),
     category: category as BlogCategory,
     date: normalizeDate(data.date, filename),
+    // Optional: only present when the writer actually revised the post.
+    updated:
+      data.updated === undefined || data.updated === null || data.updated === ''
+        ? undefined
+        : normalizeDate(data.updated, filename),
     author: requireString(data.author, 'author', filename),
     featured: data.featured === true,
     image,

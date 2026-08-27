@@ -31,6 +31,13 @@ export type BlogPost = {
   category: BlogCategory;
   /** Always 'YYYY-MM-DD'. Normalized on read so writers can leave it unquoted. */
   date: string;
+  /**
+   * Set this when a post is materially revised, and it becomes `dateModified`
+   * in the article's structured data plus an "Updated" line on the page.
+   * Absent when the post has not been touched since publication — a
+   * dateModified that just mirrors the publish date is noise, not freshness.
+   */
+  updated?: string;
   author: string;
   /** Pins the post to the hero slot on /blog. At most one should set it. */
   featured: boolean;

@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   Phone,
@@ -110,7 +111,16 @@ export function CallFlow() {
         <SectionHeading
           eyebrow="Follow the call"
           title="What happens when a customer calls you."
-          description="One late-night emergency, from the first ring to a five-star review. You don’t have to do any of it."
+          description={
+            <>
+              One late-night emergency, from the first ring to a five-star
+              review. You don’t have to do any of it —{' '}
+              <Link href="/how-it-works" className="font-medium text-brand-700 underline decoration-brand-200 underline-offset-4 transition-colors hover:decoration-brand-500">
+                the full walkthrough is here
+              </Link>
+              .
+            </>
+          }
         />
 
         <div className="mt-10 grid min-w-0 gap-10 sm:mt-16 lg:grid-cols-2 lg:gap-16">

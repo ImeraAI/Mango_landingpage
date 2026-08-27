@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { BasicPage } from '@/components/layout/BasicPage';
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/terms' },
   title: 'Terms',
   description: 'Mango terms of service.',
 };

@@ -5,6 +5,7 @@ import { DemoBooking } from '@/components/sections/DemoBooking';
 import { StaticBackdrop } from '@/components/primitives/StaticBackdrop';
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/demo' },
   title: 'Book a demo',
   description:
     'See Mango answer your calls live. Book a 20-minute walkthrough tailored to your trade and get a custom ROI estimate. No commitment.',

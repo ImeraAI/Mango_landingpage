@@ -9,6 +9,7 @@ import {
   ArrowRight,
   CalendarDays,
   Clock,
+  RefreshCw,
   User,
 } from 'lucide-react';
 import { Header } from '@/components/layout/Header';
@@ -20,6 +21,8 @@ import { PostCover } from '@/components/blog/PostCover';
 import { CategoryPill } from '@/components/blog/CategoryVisual';
 import { formatDate, formatReadingTime } from '@/content/blog';
 import { getAllPostSlugs, getPostBySlug } from '@/lib/blog';
+import { JsonLd } from '@/components/seo/JsonLd';
+import { blogPostingSchema, breadcrumbSchema } from '@/lib/schema';
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -37,11 +40,13 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   return {
     title: post.title,
     description: post.excerpt,
+    alternates: { canonical: `/blog/${slug}` },
     openGraph: {
       title: `${post.title} · Mango`,
       description: post.excerpt,
       type: 'article',
       publishedTime: post.date,
+      ...(post.updated ? { modifiedTime: post.updated } : {}),
       authors: [post.author],
       // The banner doubles as the link preview on LinkedIn, Slack and the rest.
       // metadataBase in app/layout.tsx turns the relative path absolute.
@@ -57,8 +62,24 @@ export default async function PostPage({ params }: Params) {
   const post = getPostBySlug(slug);
   if (!post) notFound();
 
+  // Word count is a real signal of depth, and it costs one split to state it
+  // rather than leave a machine to guess from the rendered page.
+  const wordCount = (post.content ?? '').split(/\s+/).filter(Boolean).length;
+
   return (
     <>
+      <JsonLd
+        id="ld-post"
+        schema={blogPostingSchema({ ...post, wordCount })}
+      />
+      <JsonLd
+        id="ld-breadcrumb"
+        schema={breadcrumbSchema([
+          { name: 'Home', path: '/' },
+          { name: 'Blog', path: '/blog' },
+          { name: post.title, path: `/blog/${post.slug}` },
+        ])}
+      />
       <Header />
       <main className="overflow-x-hidden bg-white">
         <Section className="pt-32 sm:pt-36">
@@ -88,6 +109,17 @@ export default async function PostPage({ params }: Params) {
                 <User className="h-4 w-4" />
                 {post.author}
               </span>
+              {/* Shown only when the post was actually revised, matching the
+                  dateModified that goes into the article's structured data. */}
+              {post.updated ? (
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-50 px-2.5 py-0.5 text-xs font-semibold text-brand-700">
+                  <RefreshCw className="h-3.5 w-3.5" />
+                  Updated{' '}
+                  <time dateTime={post.updated}>
+                    {formatDate(post.updated)}
+                  </time>
+                </span>
+              ) : null}
             </div>
 
             <h1 className="mt-4 font-display text-4xl font-semibold leading-[1.1] tracking-tight text-slate-900 sm:text-5xl">

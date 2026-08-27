@@ -17,8 +17,11 @@ import { PostCover } from '@/components/blog/PostCover';
 import { CategoryPill } from '@/components/blog/CategoryVisual';
 import { formatDate, formatReadingTime } from '@/content/blog';
 import { getAllPosts } from '@/lib/blog';
+import { JsonLd } from '@/components/seo/JsonLd';
+import { blogSchema, breadcrumbSchema } from '@/lib/schema';
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/blog' },
   title: 'Blog',
   description:
     'Practical advice on running the phones at a home service business: intake, after-hours cover, and what missed calls really cost.',
@@ -38,6 +41,14 @@ export default function BlogPage() {
 
   return (
     <>
+      <JsonLd id="ld-blog" schema={blogSchema(posts)} />
+      <JsonLd
+        id="ld-breadcrumb"
+        schema={breadcrumbSchema([
+          { name: 'Home', path: '/' },
+          { name: 'Blog', path: '/blog' },
+        ])}
+      />
       <Header />
       <main className="overflow-x-hidden bg-white">
         <Section className="pt-32 sm:pt-36">

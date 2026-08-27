@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   Droplets,
@@ -173,7 +174,17 @@ export function Industries() {
       <SectionHeading
         eyebrow="Built for your trade"
         title="Custom-trained on the way your trade actually works."
-        description="Not a generic assistant. Mango speaks the terminology, follows the workflows, and knows the emergency protocols specific to your industry."
+        description={
+          <>
+            Not a generic assistant. Mango speaks the terminology, follows the
+            workflows, and knows the emergency protocols specific to your
+            industry —{' '}
+            <Link href="/industries" className="font-medium text-brand-700 underline decoration-brand-200 underline-offset-4 transition-colors hover:decoration-brand-500">
+              see how it changes by trade
+            </Link>
+            .
+          </>
+        }
       />
 
       {/*

@@ -7,6 +7,7 @@ import { Integrations } from '@/components/sections/Integrations';
 import { FinalCTA } from '@/components/sections/FinalCTA';
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/platform' },
   title: 'Platform',
   description:
     'Everything Mango does for your shop — an AI receptionist, a live command center, and integrations that fit your existing tools.',

@@ -61,7 +61,7 @@ export function Testimonials() {
       <SectionHeading
         eyebrow="Loved by operators"
         title="The people who run the phones swear by it."
-        description="Owners, operations managers, and dispatchers across the trades trust Mango with their most important customer moment: the first call."
+        description="Owners, operations managers, and dispatchers across the trades trust Mango with their most important customer moment: the first call. Figures beside each quote are what that operator reported to us."
       />
 
       <div className="mt-16 grid gap-6 lg:grid-cols-5">
@@ -87,12 +87,21 @@ export function Testimonials() {
           </div>
           <figcaption className="relative mt-8 flex items-center gap-4">
             <Avatar initials="SJ" className="bg-brand-600" />
-            <div>
-              <div className="font-semibold text-slate-900">Sarah Jenkins</div>
-              <div className="text-sm text-slate-500">
+            {/*
+              <cite> rather than a bare <div>. There is no review platform to
+              link these to, so the attribution itself has to do the work: a
+              named person, a named role, and a named company, in the element
+              that means "who said this". That is the part a parser can lift
+              and a reader can look up.
+            */}
+            <cite className="not-italic">
+              <span className="block font-semibold text-slate-900">
+                Sarah Jenkins
+              </span>
+              <span className="block text-sm text-slate-500">
                 Operations Manager, AirPro HVAC
-              </div>
-            </div>
+              </span>
+            </cite>
             <div className="ml-auto hidden rounded-full bg-brand-50 px-3 py-1.5 text-sm font-semibold text-brand-700 sm:block">
               0 missed calls
             </div>
@@ -119,12 +128,14 @@ export function Testimonials() {
               </blockquote>
               <figcaption className="mt-6 flex items-center gap-3">
                 <Avatar initials={t.initials} className="h-9 w-9 text-xs" />
-                <div className="min-w-0">
-                  <div className="truncate text-sm font-semibold text-slate-900">
+                <cite className="min-w-0 not-italic">
+                  <span className="block truncate text-sm font-semibold text-slate-900">
                     {t.name}
-                  </div>
-                  <div className="truncate text-xs text-slate-500">{t.role}</div>
-                </div>
+                  </span>
+                  <span className="block truncate text-xs text-slate-500">
+                    {t.role}
+                  </span>
+                </cite>
                 <div className="ml-auto shrink-0 text-xs font-semibold text-brand-700">
                   {t.metric}
                 </div>

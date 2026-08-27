@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import {
   PhoneCall,
@@ -53,7 +54,17 @@ export function Platform() {
       <SectionHeading
         eyebrow="The platform"
         title="One AI workforce for the entire front office."
-        description="Not a chatbot bolted onto your phone line. A complete operations layer that answers, books, dispatches, bills, and follows up, purpose-built for the trades."
+        description={
+          <>
+            Not a chatbot bolted onto your phone line. A complete operations
+            layer that answers, books, dispatches, bills, and follows up,
+            purpose-built for the trades —{' '}
+            <Link href="/platform" className="font-medium text-brand-700 underline decoration-brand-200 underline-offset-4 transition-colors hover:decoration-brand-500">
+              every capability is broken down here
+            </Link>
+            .
+          </>
+        }
       />
 
       {/*

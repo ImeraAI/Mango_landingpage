@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { BasicPage } from '@/components/layout/BasicPage';
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/security' },
   title: 'Security',
   description: 'How Mango handles your call data.',
 };

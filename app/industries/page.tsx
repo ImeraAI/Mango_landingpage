@@ -6,6 +6,7 @@ import { Testimonials } from '@/components/sections/Testimonials';
 import { FinalCTA } from '@/components/sections/FinalCTA';
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/industries' },
   title: 'Industries',
   description:
     'Mango is tuned for the trades — HVAC, plumbing, electrical, and more. See how it fits the way your shop takes calls.',

@@ -56,7 +56,7 @@ export function CommandCenterSection() {
 
         <motion.div ref={ref} style={{ y, scale }} className="mt-16">
           <div className="relative mx-auto max-w-5xl">
-            <BrowserFrame url="app.mango.ai/dashboard" bodyClassName="overflow-hidden">
+            <BrowserFrame url="app.mangoaiusa.com/dashboard" bodyClassName="overflow-hidden">
               <CommandCenter />
             </BrowserFrame>
 
